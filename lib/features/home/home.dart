@@ -1,6 +1,6 @@
 import 'package:easy_sidemenu/easy_sidemenu.dart';
 import 'package:flutter/material.dart';
-import 'package:mera_web/features/categories/catagories_screen.dart';
+import 'package:mera_web/features/categories/presentation/screens/catagories_screen.dart';
 import 'package:mera_web/features/chat/chat_screen.dart';
 import 'package:mera_web/features/dashboard/dashboard_screen.dart';
 import 'package:mera_web/features/foods/fooditem_screen.dart';
@@ -109,7 +109,7 @@ class _HomePageState extends State<HomePage> {
                 const FooditemScreen(),
                 const UsersScreens(),
                 const ChatScreen(),
-                CategoryScreen(),
+                CatagoriesScreen(),
               ],
             ),
           ),
