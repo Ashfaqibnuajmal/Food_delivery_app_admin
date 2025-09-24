@@ -11,20 +11,20 @@ import 'package:provider/provider.dart';
 // ignore: must_be_immutable
 class Body extends StatelessWidget {
   TextEditingController catagorynameController = TextEditingController();
+
   Body({super.key, required this.catagorynameController});
+  double sidebarWidth = 250; // Change this to your actual sidebar width
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      child: Card(
-        elevation: 5,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+    return Center(
+      child: SizedBox(
+        width: double.infinity,
         child: SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: ConstrainedBox(
             constraints: BoxConstraints(
-              minWidth: MediaQuery.of(context).size.width - (13.0 * 2),
+              minWidth: MediaQuery.of(context).size.width - sidebarWidth - 26.0,
             ),
             child: StreamBuilder<List<CategoryModel>>(
                 stream: context.read<CategorySevices>().fetchCatagories(),
@@ -37,85 +37,264 @@ class Body extends StatelessWidget {
                   if (snapshot.hasError) {
                     log(snapshot.error.toString());
                     return Center(
-                      child: Text("Error${snapshot.error}"),
+                      child: Text("Error: ${snapshot.error}"),
                     );
                   }
                   if (!snapshot.hasData || snapshot.data!.isEmpty) {
                     return const Center(
-                      child: Text("No catagories found"),
+                      child: Text("No categories found"),
                     );
                   }
-                  return DataTable(
-                      columnSpacing: 20,
-                      columns: const [
-                        DataColumn(label: Text("Logo")),
-                        DataColumn(label: Text("Catagory Name")),
-                        DataColumn(label: Text("Action"))
-                      ],
-                      rows: snapshot.data!.map((value) {
-                        return DataRow(cells: [
-                          DataCell(Image.network(
-                            value.imageUrl,
-                            width: 50,
-                            height: 50,
-                          )),
-                          DataCell(Text(value.name)),
-                          DataCell(Row(
-                            children: [
-                              TextButton(
-                                onPressed: () {
-                                  catagorynameController =
-                                      TextEditingController(text: value.name);
-                                  custemAddDialog(
-                                      context: context,
-                                      oldImage: value.imageUrl,
-                                      controller: catagorynameController,
-                                      onpressed: () async {
-                                        final newImage = context
-                                            .read<ImageProviderModel>()
-                                            .pickedImage;
-                                        final updatedCatagory = CategoryModel(
-                                            categoryUid: value.categoryUid,
-                                            imageUrl: newImage != null
-                                                ? await context
-                                                        .read<CategorySevices>()
-                                                        .sendImageToCloudinary(
-                                                            newImage) ??
-                                                    value.imageUrl
-                                                : value.imageUrl,
-                                            name: catagorynameController.text);
-                                        context
-                                            .read<CategorySevices>()
-                                            .editCategory(updatedCatagory,
-                                                value.imageUrl);
-                                        if (Navigator.canPop(context)) {
-                                          catagorynameController.clear();
-                                          context
-                                              .read<ImageProviderModel>()
-                                              .clearImage();
-                                          Navigator.pop(context);
-                                        }
-                                      });
-                                },
-                                child: const Text("edit"),
+
+                  final categories = snapshot.data!;
+
+                  return Center(
+                    child: Container(
+                      width: MediaQuery.of(context).size.width > 600
+                          ? 600
+                          : MediaQuery.of(context).size.width * 0.9,
+                      margin: const EdgeInsets.all(20),
+                      decoration: BoxDecoration(
+                        color: Colors.grey[100],
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(color: Colors.grey[400]!, width: 2),
+                      ),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          // Header Row
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 16, vertical: 12),
+                            decoration: BoxDecoration(
+                              color: Colors.grey[200],
+                              borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(6),
+                                topRight: Radius.circular(6),
                               ),
-                              TextButton(
-                                  onPressed: () {
-                                    customAlertDialog(context, () {
-                                      context
-                                          .read<CategorySevices>()
-                                          .deleteCategory(value);
-                                      Navigator.pop(context);
-                                    });
-                                  },
-                                  child: const Text(
-                                    "Delete",
-                                    style: TextStyle(color: Colors.red),
-                                  ))
-                            ],
-                          ))
-                        ]);
-                      }).toList());
+                              border: Border(
+                                bottom: BorderSide(
+                                    color: Colors.grey[400]!, width: 1),
+                              ),
+                            ),
+                            child: const Row(
+                              children: [
+                                Expanded(
+                                  flex: 1,
+                                  child: Text(
+                                    'Image',
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 2,
+                                  child: Text(
+                                    'Name',
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 1,
+                                  child: Text(
+                                    'Edit',
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 1,
+                                  child: Text(
+                                    'Delete',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                      fontSize: 16,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+
+                          // List
+                          ListView.builder(
+                            itemCount: categories.length,
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemBuilder: (context, index) {
+                              final value = categories[index];
+                              return Container(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 16, vertical: 8),
+                                decoration: BoxDecoration(
+                                  border: Border(
+                                    bottom: BorderSide(
+                                      color: Colors.grey[300]!,
+                                      width: 1,
+                                    ),
+                                  ),
+                                ),
+                                child: Row(
+                                  children: [
+                                    // Image
+                                    Expanded(
+                                      flex: 1,
+                                      child: Container(
+                                        width: 40,
+                                        height: 40,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(4),
+                                          color: Colors.grey[200],
+                                          image: DecorationImage(
+                                            image: NetworkImage(value.imageUrl),
+                                            fit: BoxFit.fill,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+
+                                    // Name
+                                    Expanded(
+                                      flex: 2,
+                                      child: Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 10),
+                                        child: Text(
+                                          value.name,
+                                          style: const TextStyle(
+                                              fontSize: 16,
+                                              color: Colors.black),
+                                        ),
+                                      ),
+                                    ),
+
+                                    // Edit Button
+                                    Expanded(
+                                      flex: 1,
+                                      child: Center(
+                                        child: ElevatedButton(
+                                          onPressed: () {
+                                            catagorynameController =
+                                                TextEditingController(
+                                                    text: value.name);
+                                            custemAddDialog(
+                                                context: context,
+                                                oldImage: value.imageUrl,
+                                                controller:
+                                                    catagorynameController,
+                                                onpressed: () async {
+                                                  final newImage = context
+                                                      .read<
+                                                          ImageProviderModel>()
+                                                      .pickedImage;
+                                                  final updatedCatagory = CategoryModel(
+                                                      categoryUid:
+                                                          value.categoryUid,
+                                                      imageUrl: newImage != null
+                                                          ? await context
+                                                                  .read<
+                                                                      CategorySevices>()
+                                                                  .sendImageToCloudinary(
+                                                                      newImage) ??
+                                                              value.imageUrl
+                                                          : value.imageUrl,
+                                                      name:
+                                                          catagorynameController
+                                                              .text);
+                                                  // ignore: use_build_context_synchronously
+                                                  context
+                                                      .read<CategorySevices>()
+                                                      .editCategory(
+                                                          updatedCatagory,
+                                                          value.imageUrl);
+                                                  // ignore: use_build_context_synchronously
+                                                  if (Navigator.canPop(
+                                                      context)) {
+                                                    catagorynameController
+                                                        .clear();
+                                                    // ignore: use_build_context_synchronously
+                                                    context
+                                                        .read<
+                                                            ImageProviderModel>()
+                                                        .clearImage();
+                                                    // ignore: use_build_context_synchronously
+                                                    Navigator.pop(context);
+                                                  }
+                                                });
+                                          },
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors.black,
+                                            foregroundColor: Colors.white,
+                                            minimumSize: const Size(60, 32),
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 12),
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(16),
+                                            ),
+                                          ),
+                                          child: const Text(
+                                            'Edit',
+                                            style: TextStyle(fontSize: 12),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+
+                                    // Delete Button
+                                    Expanded(
+                                      flex: 1,
+                                      child: Center(
+                                        child: ElevatedButton(
+                                          onPressed: () {
+                                            customDeleteDilog(context, () {
+                                              context
+                                                  .read<CategorySevices>()
+                                                  .deleteCategory(value);
+                                              Navigator.pop(context);
+                                            });
+                                          },
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors.red,
+                                            foregroundColor: Colors.white,
+                                            minimumSize: const Size(60, 32),
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 12),
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(16),
+                                            ),
+                                          ),
+                                          child: const Text(
+                                            'Delete',
+                                            style: TextStyle(fontSize: 12),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
                 }),
           ),
         ),

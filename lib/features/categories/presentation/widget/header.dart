@@ -10,10 +10,43 @@ class Header extends StatelessWidget {
   const Header({super.key, required this.catagorynameController});
 
   @override
+  // Widget build(BuildContext context) {
+  //   return ElevatedButton(
+  //     onPressed: () => categoryCustomAddDialog(context),
+  //     child: const Text("Add Category"),
+  //   );
+  // }
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: () => categoryCustomAddDialog(context),
-      child: const Text("Add Category"),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          const Text(
+            "Categories",
+            style: TextStyle(
+                fontSize: 25, fontWeight: FontWeight.bold, color: Colors.white),
+          ),
+          ElevatedButton(
+              onPressed: () => categoryCustomAddDialog(context),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.green,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12)),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                elevation: 10, // Shadow depth
+                shadowColor: Colors.black.withOpacity(0.3), // Shadow color
+              ),
+              child: const Text(
+                "Add Category",
+                style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold),
+              ))
+        ],
+      ),
     );
   }
 

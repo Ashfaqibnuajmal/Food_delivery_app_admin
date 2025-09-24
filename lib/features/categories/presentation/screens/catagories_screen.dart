@@ -10,8 +10,9 @@ class CatagoriesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.blueAccent,
       body: Padding(
-        padding: EdgeInsets.all(13),
+        padding: const EdgeInsets.all(13),
         child: SingleChildScrollView(
           scrollDirection: Axis.vertical,
           child: Column(
