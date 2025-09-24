@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mera_web/core/theme/textstyle.dart';
 import 'package:mera_web/core/widgets/cutom_snackbar.dart';
 import 'package:mera_web/features/categories/presentation/widget/add_dilalog_widget.dart';
 import 'package:mera_web/features/categories/provider/pick_image.dart';
@@ -10,12 +11,6 @@ class Header extends StatelessWidget {
   const Header({super.key, required this.catagorynameController});
 
   @override
-  // Widget build(BuildContext context) {
-  //   return ElevatedButton(
-  //     onPressed: () => categoryCustomAddDialog(context),
-  //     child: const Text("Add Category"),
-  //   );
-  // }
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -24,8 +19,7 @@ class Header extends StatelessWidget {
         children: [
           const Text(
             "Categories",
-            style: TextStyle(
-                fontSize: 25, fontWeight: FontWeight.bold, color: Colors.white),
+            style: CustomTextStyles.categoriesTitle,
           ),
           ElevatedButton(
               onPressed: () => categoryCustomAddDialog(context),
@@ -35,16 +29,11 @@ class Header extends StatelessWidget {
                     borderRadius: BorderRadius.circular(12)),
                 padding:
                     const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                elevation: 10, // Shadow depth
-                shadowColor: Colors.black.withOpacity(0.3), // Shadow color
+                elevation: 4,
+                shadowColor: Colors.black.withOpacity(0.3),
               ),
-              child: const Text(
-                "Add Category",
-                style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold),
-              ))
+              child: const Text("Add Category",
+                  style: CustomTextStyles.addCategory))
         ],
       ),
     );

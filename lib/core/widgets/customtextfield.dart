@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 // ignore: must_be_immutable
 class CustemTextFIeld extends StatefulWidget {
   final TextInputType textType;
-  final String label;
   final String hintText;
   final TextEditingController controller;
   final bool password;
@@ -16,7 +15,6 @@ class CustemTextFIeld extends StatefulWidget {
     this.enabled = true,
     this.ontap,
     this.textType = TextInputType.text,
-    required this.label,
     required this.hintText,
     required this.controller,
     this.password = false,
@@ -32,7 +30,6 @@ class _CustemTextFIeldState extends State<CustemTextFIeld> {
   late bool _obscureText;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _obscureText = widget.password;
   }
@@ -42,8 +39,6 @@ class _CustemTextFIeldState extends State<CustemTextFIeld> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SizedBox(height: 5),
-        Text(widget.label, style: const TextStyle(fontWeight: FontWeight.w700)),
         const SizedBox(height: 8),
         TextFormField(
           enabled: widget.enabled,

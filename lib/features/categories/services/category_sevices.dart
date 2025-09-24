@@ -17,15 +17,10 @@ class CategorySevices extends ChangeNotifier {
     final nameLower = name.toLowerCase();
     try {
       final snapshot = await categoryCollection.get();
-      // for (var doc in snapshot.docs) {
-      //   final categoryName = doc['Name'] as String;
-      //   if (categoryName.toLowerCase() == nameLower) {
-      //     return true;
-      //   }
-      // }
+
       for (var doc in snapshot.docs) {
-        final data = doc.data() as Map<String, dynamic>;
-        final categoryName = (data['Name'] ?? '') as String; // ✅ safe
+        final data = doc.data();
+        final categoryName = (data['Name'] ?? '') as String;
         if (categoryName.toLowerCase() == nameLower) {
           return true;
         }
@@ -69,7 +64,7 @@ class CategorySevices extends ChangeNotifier {
 
   Future<void> editCategory(CategoryModel category, String oldImage) async {
     try {
-      if (oldImage != null && oldImage != category.imageUrl) {
+      if (oldImage != category.imageUrl) {
         await deleteImageFromCloudinary(oldImage);
       }
       await categoryCollection
@@ -91,11 +86,6 @@ class CategorySevices extends ChangeNotifier {
     }
   }
 
-  // Stream<List<CategoryModel>> fetchCatagories() {
-  //   return categoryCollection.snapshots().map((snapshot) => snapshot.docs
-  //       .map((snapshot) => CategoryModel.fromMap(snapshot.data()))
-  //       .toList());
-  // }
   Stream<List<CategoryModel>> fetchCatagories() {
     return categoryCollection.snapshots().map((snapshot) => snapshot.docs
         .map((snapshot) => CategoryModel.fromMap(snapshot.data()))
@@ -112,17 +102,18 @@ class CategorySevices extends ChangeNotifier {
         ..files.add(http.MultipartFile.fromBytes(
           "file",
           image,
-          filename: "cateforyname",
+          filename: "categoryname",
         ));
       final response = await request.send();
       if (response.statusCode == 200) {
-        log("request sedned successfully");
+        log("request sended successfully");
         final res = await http.Response.fromStream(response);
         return jsonDecode(res.body)["secure_url"];
       }
     } catch (e) {
       log(e.toString());
     }
+    return null;
   }
 
   Future<void> deleteImageFromCloudinary(String imageUrl) async {

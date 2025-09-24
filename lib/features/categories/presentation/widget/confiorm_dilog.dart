@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mera_web/core/theme/textstyle.dart';
 
 customDeleteDilog(BuildContext context, VoidCallback? onPress) {
   return showDialog(
@@ -33,23 +34,15 @@ customDeleteDilog(BuildContext context, VoidCallback? onPress) {
               // Title
               const Text(
                 'Delete',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.black,
-                ),
+                style: CustomTextStyles.deleteTitle,
               ),
               const SizedBox(height: 12),
-
-              // Message
               const Text(
                 'Are you sure you want to delete this item?',
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.black87,
-                ),
+                style: CustomTextStyles.deleteMessage,
                 textAlign: TextAlign.center,
               ),
+
               const SizedBox(height: 24),
 
               // Buttons
@@ -69,13 +62,7 @@ customDeleteDilog(BuildContext context, VoidCallback? onPress) {
                           borderRadius: BorderRadius.circular(8),
                         ),
                       ),
-                      child: const Text(
-                        'NO',
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
+                      child: const Text('NO', style: CustomTextStyles.yesORno),
                     ),
                   ),
                   const SizedBox(width: 12),
@@ -93,13 +80,7 @@ customDeleteDilog(BuildContext context, VoidCallback? onPress) {
                         ),
                         elevation: 0,
                       ),
-                      child: const Text(
-                        'YES',
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
+                      child: const Text('YES', style: CustomTextStyles.yesORno),
                     ),
                   ),
                 ],

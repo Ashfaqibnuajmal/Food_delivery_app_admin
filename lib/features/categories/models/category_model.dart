@@ -17,9 +17,9 @@ class CategoryModel {
 
   factory CategoryModel.fromMap(Map<String, dynamic> map) {
     return CategoryModel(
-      categoryUid: map['categoryUid'] ?? '', // default empty string if null
-      imageUrl: map['imageUrl'] ?? '', // default empty string if null
-      name: map['name'] ?? 'Unknown', // default "Unknown" if null
+      categoryUid: map['categoryUid'] ?? '',
+      imageUrl: map['imageUrl'] ?? '',
+      name: map['name'] ?? 'Unknown',
     );
   }
 }

@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:mera_web/core/theme/textstyle.dart';
 import 'package:mera_web/core/widgets/customtextfield.dart';
 import 'package:mera_web/features/categories/provider/pick_image.dart';
 import 'package:provider/provider.dart';
@@ -64,7 +65,6 @@ Future<void> showEditCategoryDialog({
 
               // Category Name TextField
               CustemTextFIeld(
-                label: "",
                 hintText: "Enter category name",
                 controller: nameController,
               ),
@@ -87,13 +87,8 @@ Future<void> showEditCategoryDialog({
                     borderRadius: BorderRadius.circular(8),
                   ),
                 ),
-                child: const Text(
-                  "Save Changes",
-                  style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold),
-                ),
+                child: const Text("Save Changes",
+                    style: CustomTextStyles.addCategory),
               ),
             ],
           ),

@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:mera_web/core/theme/textstyle.dart';
 import 'package:mera_web/features/categories/models/category_model.dart';
 import 'package:mera_web/features/categories/presentation/widget/add_dilalog_widget.dart';
 import 'package:mera_web/features/categories/presentation/widget/confiorm_dilog.dart';
@@ -81,35 +82,19 @@ class Body extends StatelessWidget {
                               children: [
                                 Expanded(
                                   flex: 1,
-                                  child: Text(
-                                    'Image',
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16,
-                                    ),
-                                  ),
+                                  child: Text('Image',
+                                      style: CustomTextStyles.header),
                                 ),
                                 Expanded(
                                   flex: 2,
-                                  child: Text(
-                                    'Name',
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16,
-                                    ),
-                                  ),
+                                  child: Text('Name',
+                                      style: CustomTextStyles.header),
                                 ),
                                 Expanded(
                                   flex: 1,
                                   child: Text(
                                     'Edit',
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16,
-                                    ),
+                                    style: CustomTextStyles.header,
                                     textAlign: TextAlign.center,
                                   ),
                                 ),
@@ -117,11 +102,7 @@ class Body extends StatelessWidget {
                                   flex: 1,
                                   child: Text(
                                     'Delete',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black,
-                                      fontSize: 16,
-                                    ),
+                                    style: CustomTextStyles.header,
                                     textAlign: TextAlign.center,
                                   ),
                                 ),
@@ -223,6 +204,7 @@ class Body extends StatelessWidget {
                                                           value.imageUrl);
                                                   // ignore: use_build_context_synchronously
                                                   if (Navigator.canPop(
+                                                      // ignore: use_build_context_synchronously
                                                       context)) {
                                                     catagorynameController
                                                         .clear();
