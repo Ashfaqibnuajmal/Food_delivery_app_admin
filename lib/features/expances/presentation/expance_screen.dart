@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mera_web/features/categories/presentation/widget/confiorm_dilog.dart';
 import 'package:mera_web/features/expances/models/expance_model.dart';
-import 'package:mera_web/features/expances/presentation/expance_add_screen.dart';
+import 'package:mera_web/features/expances/presentation/expance_add_dilog.dart';
 import 'package:mera_web/features/expances/presentation/expance_edit_dilog.dart';
 import 'package:mera_web/features/expances/provider/expance_provider.dart';
 import 'package:mera_web/features/expances/services/expance_services.dart';
@@ -21,17 +22,61 @@ class ExpanceScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                "Expanse Management",
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    "Expanse Management",
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.green,
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 14),
+                    ),
+                    onPressed: () {
+                      customAddExpenseDialog(
+                        context: context,
+                        onPressed: () {
+                          final provider = Provider.of<ExpenseProvider>(context,
+                              listen: false);
+
+                          if (provider.date != null &&
+                              provider.category != null &&
+                              provider.amount != null &&
+                              provider.status != null) {
+                            expenseService.addExpance(
+                              date: provider.date!,
+                              category: provider.category!,
+                              amount: provider.amount!.toDouble(),
+                              status: provider.status!,
+                            );
+
+                            // clear form
+                            provider.clearDate();
+                            provider.clearCategory();
+                            provider.clearAmount();
+                            provider.clearStatus();
+                          }
+                        },
+                      );
+                    },
+                    child: const Text("Add Expanse",
+                        style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold)),
+                  ),
+                ],
               ),
               const SizedBox(height: 20),
 
-              // ✅ Summary Cards Row (Realtime)
+              // ✅ Summary Cards (Realtime Net Balance)
               StreamBuilder<List<ExpenseModel>>(
                 stream: expenseService.fetchExpenses(),
                 builder: (context, snapshot) {
@@ -47,18 +92,22 @@ class ExpanceScreen extends StatelessWidget {
                   double stationaryTotal = 0;
 
                   for (var exp in expenses) {
+                    double value = exp.amount;
+                    if (exp.status == "Consumed") {
+                      value = -value; // subtract if consumed
+                    }
                     switch (exp.category) {
                       case "Gas":
-                        gasTotal += exp.amount;
+                        gasTotal += value;
                         break;
                       case "Room Rent":
-                        rentTotal += exp.amount;
+                        rentTotal += value;
                         break;
                       case "Electricity":
-                        electricityTotal += exp.amount;
+                        electricityTotal += value;
                         break;
                       case "Stationary":
-                        stationaryTotal += exp.amount;
+                        stationaryTotal += value;
                         break;
                     }
                   }
@@ -95,7 +144,7 @@ class ExpanceScreen extends StatelessWidget {
 
               const SizedBox(height: 30),
 
-              // ✅ Expense Table (Realtime)
+              // ✅ Expense Table (Realtime from Firestore)
               Expanded(
                 child: StreamBuilder<List<ExpenseModel>>(
                   stream: expenseService.fetchExpenses(),
@@ -112,13 +161,19 @@ class ExpanceScreen extends StatelessWidget {
                       decoration: BoxDecoration(
                         color: Colors.grey.shade300,
                         border: Border.all(color: Colors.black, width: 2),
+                        borderRadius: BorderRadius.circular(30),
                       ),
                       child: Column(
                         children: [
-                          // Table Header
+                          // Header Row
                           Container(
                             padding: const EdgeInsets.symmetric(vertical: 12),
-                            color: Colors.white,
+                            decoration: const BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.only(
+                                  topRight: Radius.circular(30),
+                                  topLeft: Radius.circular(30),
+                                )),
                             child: const Row(
                               children: [
                                 Expanded(
@@ -161,7 +216,7 @@ class ExpanceScreen extends StatelessWidget {
                             ),
                           ),
 
-                          // Table Body
+                          // Body
                           Expanded(
                             child: ListView.builder(
                               itemCount: expenses.length,
@@ -190,8 +245,12 @@ class ExpanceScreen extends StatelessWidget {
                                     );
                                   },
                                   onDelete: () {
-                                    expenseService
-                                        .deleteExpense(expense.expanseUid);
+                                    customDeleteDilog(context, () async {
+                                      await expenseService
+                                          .deleteExpense(expense.expanseUid);
+                                      // ignore: use_build_context_synchronously
+                                      Navigator.pop(context);
+                                    });
                                   },
                                 );
                               },
@@ -203,52 +262,7 @@ class ExpanceScreen extends StatelessWidget {
                   },
                 ),
               ),
-
-              const SizedBox(height: 20),
-
-              // ✅ Add Expense Button
-              Align(
-                alignment: Alignment.centerRight,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 20, vertical: 14),
-                  ),
-                  onPressed: () {
-                    customAddExpenseDialog(
-                      context: context,
-                      onPressed: () {
-                        final provider = Provider.of<ExpenseProvider>(context,
-                            listen: false);
-
-                        if (provider.date != null &&
-                            provider.category != null &&
-                            provider.amount != null &&
-                            provider.status != null) {
-                          expenseService.addExpance(
-                            date: provider.date!,
-                            category: provider.category!,
-                            amount: provider.amount!.toDouble(),
-                            status: provider.status!,
-                          );
-
-                          // clear provider after saving
-                          provider.clearDate();
-                          provider.clearCategory();
-                          provider.clearAmount();
-                          provider.clearStatus();
-                        }
-                      },
-                    );
-                  },
-                  child: const Text("Add Expanse",
-                      style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold)),
-                ),
-              ),
+              const SizedBox(height: 30)
             ],
           ),
         ),
@@ -257,7 +271,7 @@ class ExpanceScreen extends StatelessWidget {
   }
 }
 
-// ✅ Summary Card Widget
+/// ✅ Summary Card
 class SummaryCard extends StatelessWidget {
   final String title;
   final double amount;
@@ -272,7 +286,7 @@ class SummaryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 180,
+      width: 230,
       height: 110,
       decoration: BoxDecoration(
         color: Colors.black,
@@ -313,7 +327,7 @@ class SummaryCard extends StatelessWidget {
   }
 }
 
-// ✅ Row in table
+/// ✅ Row Widget
 class ExpenseRow extends StatelessWidget {
   final ExpenseModel expense;
   final VoidCallback onEdit;

@@ -50,10 +50,4 @@ class ExpenseProvider extends ChangeNotifier {
     _status = null;
     notifyListeners();
   }
-
-  void addExpense() {
-    // Later we'll push this to Firebase 🔥
-    debugPrint(
-        "Expense Added: Date=$_date, Category=$_category, Amount=$_amount, Status=$_status");
-  }
 }

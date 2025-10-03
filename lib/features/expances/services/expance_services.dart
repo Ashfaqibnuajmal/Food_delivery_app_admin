@@ -57,16 +57,4 @@ class ExpanceServices extends ChangeNotifier {
       },
     );
   }
-
-  /// 🔄 Fetch by Category (Optional)
-  Stream<List<ExpenseModel>> fetchExpensesByCategory(String category) {
-    return expanceCollection
-        .where("category", isEqualTo: category)
-        .snapshots()
-        .map((snapshot) {
-      return snapshot.docs.map((doc) {
-        return ExpenseModel.fromMap(doc.data());
-      }).toList();
-    });
-  }
 }

@@ -1,7 +1,5 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
-import 'package:mera_web/features/expances/provider/expance_provider.dart';
-import 'package:provider/provider.dart';
 
 Future<void> showEditExpenseDialog({
   required BuildContext context,
@@ -24,8 +22,6 @@ Future<void> showEditExpenseDialog({
   await showDialog(
     context: context,
     builder: (context) {
-      final provider = Provider.of<ExpenseProvider>(context, listen: false);
-
       return Dialog(
         backgroundColor: Colors.white,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
