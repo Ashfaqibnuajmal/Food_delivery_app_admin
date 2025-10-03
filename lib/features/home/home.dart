@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:mera_web/features/categories/presentation/screens/catagories_screen.dart';
 import 'package:mera_web/features/chat/chat_screen.dart';
 import 'package:mera_web/features/dashboard/dashboard_screen.dart';
+import 'package:mera_web/features/expances/presentation/expance_screen.dart';
 import 'package:mera_web/features/foods/fooditem_screen.dart';
 import 'package:mera_web/features/orders/order_screen.dart';
 import 'package:mera_web/features/users/users_screens.dart';
@@ -97,6 +98,13 @@ class _HomePageState extends State<HomePage> {
                 },
                 icon: const Icon(Icons.category, color: Colors.blue),
               ),
+              SideMenuItem(
+                title: 'Expance',
+                onTap: (index, _) {
+                  sideMenu.changePage(index);
+                },
+                icon: const Icon(Icons.category, color: Colors.blue),
+              ),
             ],
           ),
           const VerticalDivider(width: 1),
@@ -110,6 +118,7 @@ class _HomePageState extends State<HomePage> {
                 const UsersScreens(),
                 const ChatScreen(),
                 CatagoriesScreen(),
+                const ExpanceScreen(),
               ],
             ),
           ),

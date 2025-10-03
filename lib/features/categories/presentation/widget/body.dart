@@ -139,7 +139,7 @@ class Body extends StatelessWidget {
                                         decoration: BoxDecoration(
                                           borderRadius:
                                               BorderRadius.circular(4),
-                                          color: Colors.grey[200],
+                                          color: Colors.white,
                                           image: DecorationImage(
                                             image: NetworkImage(value.imageUrl),
                                             fit: BoxFit.fill,
