@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mera_web/core/theme/web_color.dart';
 
 // ignore: must_be_immutable
 class CustemTextFIeld extends StatefulWidget {
@@ -10,6 +11,7 @@ class CustemTextFIeld extends StatefulWidget {
   final bool enabled;
   String? Function(String?)? validator;
   VoidCallback? ontap;
+
   CustemTextFIeld({
     super.key,
     this.enabled = true,
@@ -28,6 +30,7 @@ class CustemTextFIeld extends StatefulWidget {
 
 class _CustemTextFIeldState extends State<CustemTextFIeld> {
   late bool _obscureText;
+
   @override
   void initState() {
     super.initState();
@@ -48,10 +51,12 @@ class _CustemTextFIeldState extends State<CustemTextFIeld> {
           controller: widget.controller,
           obscureText: _obscureText,
           onTap: widget.ontap,
+          style: const TextStyle(color: AppColors.pureWhite),
           decoration: InputDecoration(
             hintText: widget.hintText,
+            hintStyle: const TextStyle(color: Colors.white70),
             filled: true,
-            fillColor: const Color.fromARGB(255, 255, 253, 253),
+            fillColor: AppColors.darkBlue,
             suffixIcon: widget.password
                 ? IconButton(
                     onPressed: () {
@@ -61,18 +66,21 @@ class _CustemTextFIeldState extends State<CustemTextFIeld> {
                     },
                     icon: Icon(
                       _obscureText ? Icons.visibility : Icons.visibility_off,
+                      color: AppColors.lightBlue,
                     ),
                   )
                 : null,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
-              borderSide: const BorderSide(
-                color: Color.fromARGB(255, 229, 229, 229),
-              ),
+              borderSide: const BorderSide(color: Colors.transparent),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: const BorderSide(color: Colors.transparent),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
-              borderSide: const BorderSide(color: Colors.black),
+              borderSide: BorderSide(color: AppColors.lightBlue, width: 2),
             ),
           ),
         ),

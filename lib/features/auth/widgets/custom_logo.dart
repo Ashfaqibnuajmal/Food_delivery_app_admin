@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mera_web/core/theme/textstyle.dart';
+import 'package:mera_web/core/theme/web_color.dart';
 
 class LoginLogoSection extends StatelessWidget {
   final String logoPath;
@@ -16,7 +17,7 @@ class LoginLogoSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.black,
+      color: AppColors.darkBlue,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

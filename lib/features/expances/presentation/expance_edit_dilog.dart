@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:mera_web/core/theme/web_color.dart';
 
 Future<void> showEditExpenseDialog({
   required BuildContext context,
@@ -14,7 +15,7 @@ Future<void> showEditExpenseDialog({
   final amountController =
       TextEditingController(text: currentAmount.toString());
 
-  // Temporary values used while editing
+  // Temporary values while editing
   DateTime selectedDate = currentDate;
   String category = currentCategory;
   String status = currentStatus;
@@ -23,7 +24,7 @@ Future<void> showEditExpenseDialog({
     context: context,
     builder: (context) {
       return Dialog(
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.deepBlue, // Theme background
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
         insetPadding: const EdgeInsets.symmetric(horizontal: 100, vertical: 50),
         child: Padding(
@@ -34,7 +35,7 @@ Future<void> showEditExpenseDialog({
               // ✅ Date Picker
               ElevatedButton.icon(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.black,
+                  backgroundColor: AppColors.mediumBlue,
                   padding:
                       const EdgeInsets.symmetric(vertical: 18, horizontal: 20),
                 ),
@@ -45,6 +46,16 @@ Future<void> showEditExpenseDialog({
                       initialDate: selectedDate,
                       firstDate: DateTime(2020),
                       lastDate: DateTime(2100),
+                      builder: (context, child) => Theme(
+                        data: ThemeData.dark().copyWith(
+                          colorScheme: const ColorScheme.dark(
+                            primary: AppColors.lightBlue,
+                            surface: AppColors.deepBlue,
+                            onSurface: AppColors.pureWhite,
+                          ),
+                        ),
+                        child: child!,
+                      ),
                     );
                     if (picked != null) {
                       selectedDate = picked;
@@ -53,10 +64,10 @@ Future<void> showEditExpenseDialog({
                     log("Date Picker Error: $e");
                   }
                 },
-                icon: const Icon(Icons.date_range, color: Colors.white),
+                icon: const Icon(Icons.date_range, color: AppColors.pureWhite),
                 label: Text(
                   selectedDate.toString().split(" ")[0],
-                  style: const TextStyle(color: Colors.white),
+                  style: const TextStyle(color: AppColors.pureWhite),
                 ),
               ),
               const SizedBox(height: 20),
@@ -65,8 +76,8 @@ Future<void> showEditExpenseDialog({
               DropdownButtonFormField<String>(
                 value: category,
                 decoration: inputDecoration("Category"),
-                dropdownColor: Colors.black,
-                style: const TextStyle(color: Colors.white),
+                dropdownColor: AppColors.deepBlue,
+                style: const TextStyle(color: AppColors.pureWhite),
                 items: const [
                   DropdownMenuItem(
                       value: "Electricity", child: Text("Electricity")),
@@ -87,7 +98,7 @@ Future<void> showEditExpenseDialog({
                 controller: amountController,
                 keyboardType: TextInputType.number,
                 decoration: inputDecoration("Edit Amount"),
-                style: const TextStyle(color: Colors.white),
+                style: const TextStyle(color: AppColors.pureWhite),
               ),
               const SizedBox(height: 20),
 
@@ -95,8 +106,8 @@ Future<void> showEditExpenseDialog({
               DropdownButtonFormField<String>(
                 value: status,
                 decoration: inputDecoration("Status"),
-                dropdownColor: Colors.black,
-                style: const TextStyle(color: Colors.white),
+                dropdownColor: AppColors.deepBlue,
+                style: const TextStyle(color: AppColors.pureWhite),
                 items: const [
                   DropdownMenuItem(value: "Paid", child: Text("Paid")),
                   DropdownMenuItem(value: "Consumed", child: Text("Consumed")),
@@ -113,11 +124,10 @@ Future<void> showEditExpenseDialog({
                   final newAmount =
                       double.tryParse(amountController.text) ?? currentAmount;
                   onSave(selectedDate, category, newAmount, status);
-
                   Navigator.pop(context); // Close dialog
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.green,
+                  backgroundColor: AppColors.lightBlue,
                   padding:
                       const EdgeInsets.symmetric(vertical: 18, horizontal: 24),
                   shape: RoundedRectangleBorder(
@@ -127,7 +137,7 @@ Future<void> showEditExpenseDialog({
                   "Save Changes",
                   style: TextStyle(
                       fontSize: 16,
-                      color: Colors.white,
+                      color: AppColors.pureWhite,
                       fontWeight: FontWeight.bold),
                 ),
               ),
@@ -139,20 +149,20 @@ Future<void> showEditExpenseDialog({
   );
 }
 
-/// ✅ Same InputDecoration style used in AddExpense
+/// ✅ InputDecoration styled with AppColors
 InputDecoration inputDecoration(String label) {
   return InputDecoration(
     hintText: label,
     hintStyle: const TextStyle(color: Colors.white70),
     filled: true,
-    fillColor: Colors.black,
+    fillColor: AppColors.darkBlue,
     border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
     enabledBorder: OutlineInputBorder(
       borderSide: const BorderSide(color: Colors.transparent),
       borderRadius: BorderRadius.circular(8),
     ),
     focusedBorder: OutlineInputBorder(
-      borderSide: const BorderSide(color: Colors.white, width: 2),
+      borderSide: const BorderSide(color: AppColors.lightBlue, width: 2),
       borderRadius: BorderRadius.circular(8),
     ),
   );

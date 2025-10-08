@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:mera_web/core/theme/web_color.dart';
 import 'package:mera_web/features/categories/presentation/widget/confiorm_dilog.dart';
 import 'package:mera_web/features/expances/models/expance_model.dart';
 import 'package:mera_web/features/expances/presentation/expance_add_dilog.dart';
 import 'package:mera_web/features/expances/presentation/expance_edit_dilog.dart';
-import 'package:mera_web/features/expances/provider/expance_provider.dart';
 import 'package:mera_web/features/expances/services/expance_services.dart';
+import 'package:mera_web/features/expances/provider/expance_provider.dart';
 import 'package:provider/provider.dart';
 
 class ExpanceScreen extends StatelessWidget {
@@ -15,13 +16,14 @@ class ExpanceScreen extends StatelessWidget {
     final expenseService = ExpanceServices();
 
     return Scaffold(
-      backgroundColor: Colors.blue,
+      backgroundColor: AppColors.darkBlue,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // Header Row with Add Button
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -30,12 +32,12 @@ class ExpanceScreen extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                      color: AppColors.pureWhite,
                     ),
                   ),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.green,
+                      backgroundColor: AppColors.mediumBlue,
                       padding: const EdgeInsets.symmetric(
                           horizontal: 20, vertical: 14),
                     ),
@@ -57,7 +59,6 @@ class ExpanceScreen extends StatelessWidget {
                               status: provider.status!,
                             );
 
-                            // clear form
                             provider.clearDate();
                             provider.clearCategory();
                             provider.clearAmount();
@@ -66,23 +67,27 @@ class ExpanceScreen extends StatelessWidget {
                         },
                       );
                     },
-                    child: const Text("Add Expanse",
-                        style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold)),
+                    child: const Text(
+                      "Add Expanse",
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: AppColors.pureWhite,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
                 ],
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 40),
 
-              // ✅ Summary Cards (Realtime Net Balance)
+              // Summary Cards
               StreamBuilder<List<ExpenseModel>>(
                 stream: expenseService.fetchExpenses(),
                 builder: (context, snapshot) {
                   if (!snapshot.hasData) {
                     return const Center(
-                        child: CircularProgressIndicator(color: Colors.white));
+                        child: CircularProgressIndicator(
+                            color: AppColors.pureWhite));
                   }
 
                   final expenses = snapshot.data!;
@@ -94,7 +99,7 @@ class ExpanceScreen extends StatelessWidget {
                   for (var exp in expenses) {
                     double value = exp.amount;
                     if (exp.status == "Consumed") {
-                      value = -value; // subtract if consumed
+                      value = -value;
                     }
                     switch (exp.category) {
                       case "Gas":
@@ -118,49 +123,50 @@ class ExpanceScreen extends StatelessWidget {
                       SummaryCard(
                         title: "Gas",
                         amount: gasTotal,
-                        icon: const Icon(Icons.gas_meter, color: Colors.white),
+                        icon: const Icon(Icons.gas_meter,
+                            color: AppColors.pureWhite),
                       ),
                       SummaryCard(
                         title: "Room Rent",
                         amount: rentTotal,
-                        icon: const Icon(Icons.home, color: Colors.white),
+                        icon:
+                            const Icon(Icons.home, color: AppColors.pureWhite),
                       ),
                       SummaryCard(
                         title: "Electricity",
                         amount: electricityTotal,
                         icon: const Icon(Icons.electric_bolt_outlined,
-                            color: Colors.white),
+                            color: AppColors.pureWhite),
                       ),
                       SummaryCard(
                         title: "Stationary",
                         amount: stationaryTotal,
                         icon: const Icon(Icons.shopping_cart,
-                            color: Colors.white),
+                            color: AppColors.pureWhite),
                       ),
                     ],
                   );
                 },
               ),
-
               const SizedBox(height: 30),
 
-              // ✅ Expense Table (Realtime from Firestore)
+              // Expense Table
               Expanded(
                 child: StreamBuilder<List<ExpenseModel>>(
                   stream: expenseService.fetchExpenses(),
                   builder: (context, snapshot) {
                     if (!snapshot.hasData) {
                       return const Center(
-                          child:
-                              CircularProgressIndicator(color: Colors.white));
+                          child: CircularProgressIndicator(
+                              color: AppColors.pureWhite));
                     }
 
                     final expenses = snapshot.data!;
 
                     return Container(
                       decoration: BoxDecoration(
-                        color: Colors.grey.shade300,
-                        border: Border.all(color: Colors.black, width: 2),
+                        color: AppColors.lightBlue.withOpacity(0.1),
+                        border: Border.all(color: AppColors.deepBlue, width: 2),
                         borderRadius: BorderRadius.circular(30),
                       ),
                       child: Column(
@@ -169,11 +175,12 @@ class ExpanceScreen extends StatelessWidget {
                           Container(
                             padding: const EdgeInsets.symmetric(vertical: 12),
                             decoration: const BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.only(
-                                  topRight: Radius.circular(30),
-                                  topLeft: Radius.circular(30),
-                                )),
+                              color: AppColors.deepBlue,
+                              borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(30),
+                                topLeft: Radius.circular(30),
+                              ),
+                            ),
                             child: const Row(
                               children: [
                                 Expanded(
@@ -181,37 +188,43 @@ class ExpanceScreen extends StatelessWidget {
                                         child: Text("Date",
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold,
-                                                fontSize: 16)))),
+                                                fontSize: 16,
+                                                color: AppColors.pureWhite)))),
                                 Expanded(
                                     child: Center(
                                         child: Text("Category",
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold,
-                                                fontSize: 16)))),
+                                                fontSize: 16,
+                                                color: AppColors.pureWhite)))),
                                 Expanded(
                                     child: Center(
                                         child: Text("Amount",
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold,
-                                                fontSize: 16)))),
+                                                fontSize: 16,
+                                                color: AppColors.pureWhite)))),
                                 Expanded(
                                     child: Center(
                                         child: Text("Status",
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold,
-                                                fontSize: 16)))),
+                                                fontSize: 16,
+                                                color: AppColors.pureWhite)))),
                                 Expanded(
                                     child: Center(
                                         child: Text("Edit",
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold,
-                                                fontSize: 16)))),
+                                                fontSize: 16,
+                                                color: AppColors.pureWhite)))),
                                 Expanded(
                                     child: Center(
                                         child: Text("Delete",
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold,
-                                                fontSize: 16)))),
+                                                fontSize: 16,
+                                                color: AppColors.pureWhite)))),
                               ],
                             ),
                           ),
@@ -245,7 +258,7 @@ class ExpanceScreen extends StatelessWidget {
                                     );
                                   },
                                   onDelete: () {
-                                    customDeleteDilog(context, () async {
+                                    customDeleteDialog(context, () async {
                                       await expenseService
                                           .deleteExpense(expense.expanseUid);
                                       // ignore: use_build_context_synchronously
@@ -271,7 +284,7 @@ class ExpanceScreen extends StatelessWidget {
   }
 }
 
-/// ✅ Summary Card
+// Summary Card Widget
 class SummaryCard extends StatelessWidget {
   final String title;
   final double amount;
@@ -286,10 +299,10 @@ class SummaryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 230,
+      width: 200,
       height: 110,
       decoration: BoxDecoration(
-        color: Colors.black,
+        color: AppColors.mediumBlue,
         borderRadius: BorderRadius.circular(10),
       ),
       child: Padding(
@@ -301,12 +314,15 @@ class SummaryCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(title,
-                    style: const TextStyle(fontSize: 16, color: Colors.white)),
+                    style: const TextStyle(
+                        fontSize: 16,
+                        color: AppColors.pureWhite,
+                        fontWeight: FontWeight.bold)),
                 Container(
                   height: 30,
                   width: 30,
                   decoration: BoxDecoration(
-                      color: Colors.blue,
+                      color: AppColors.darkBlue,
                       borderRadius: BorderRadius.circular(5)),
                   child: icon,
                 )
@@ -317,7 +333,7 @@ class SummaryCard extends StatelessWidget {
               amount.toStringAsFixed(2),
               style: const TextStyle(
                   fontSize: 18,
-                  color: Colors.white,
+                  color: AppColors.pureWhite,
                   fontWeight: FontWeight.bold),
             ),
           ],
@@ -327,7 +343,7 @@ class SummaryCard extends StatelessWidget {
   }
 }
 
-/// ✅ Row Widget
+// Expense Row Widget
 class ExpenseRow extends StatelessWidget {
   final ExpenseModel expense;
   final VoidCallback onEdit;
@@ -344,20 +360,24 @@ class ExpenseRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final isPaid = expense.status == "Paid";
     return Container(
+      color: AppColors.lightBlue.withOpacity(0.1), // row background color
       padding: const EdgeInsets.symmetric(vertical: 12),
-      decoration: const BoxDecoration(
-        border: Border(bottom: BorderSide(color: Colors.black, width: 1)),
-      ),
       child: Row(
         children: [
           Expanded(
-              child:
-                  Center(child: Text(expense.date.toString().split(" ")[0]))),
-          Expanded(child: Center(child: Text(expense.category))),
+              child: Center(
+                  child: Text(expense.date.toString().split(" ")[0],
+                      style: const TextStyle(color: AppColors.pureWhite)))),
+          Expanded(
+              child: Center(
+                  child: Text(expense.category,
+                      style: const TextStyle(color: AppColors.pureWhite)))),
           Expanded(
               child: Center(
                   child: Text(expense.amount.toString(),
-                      style: const TextStyle(fontWeight: FontWeight.bold)))),
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.pureWhite)))),
           Expanded(
             child: Center(
               child: Text(
@@ -371,10 +391,11 @@ class ExpenseRow extends StatelessWidget {
           Expanded(
             child: Center(
               child: ElevatedButton(
-                style: ElevatedButton.styleFrom(backgroundColor: Colors.black),
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.deepBlue),
                 onPressed: onEdit,
-                child:
-                    const Text("Edit", style: TextStyle(color: Colors.white)),
+                child: const Text("Edit",
+                    style: TextStyle(color: AppColors.pureWhite)),
               ),
             ),
           ),
@@ -383,8 +404,8 @@ class ExpenseRow extends StatelessWidget {
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
                 onPressed: onDelete,
-                child:
-                    const Text("Delete", style: TextStyle(color: Colors.white)),
+                child: const Text("Delete",
+                    style: TextStyle(color: AppColors.pureWhite)),
               ),
             ),
           ),

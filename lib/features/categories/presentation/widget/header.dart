@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mera_web/core/theme/textstyle.dart';
+import 'package:mera_web/core/theme/web_color.dart';
 import 'package:mera_web/core/widgets/cutom_snackbar.dart';
 import 'package:mera_web/features/categories/presentation/widget/add_dilalog_widget.dart';
 import 'package:mera_web/features/categories/provider/pick_image.dart';
@@ -22,16 +23,12 @@ class Header extends StatelessWidget {
             style: CustomTextStyles.categoriesTitle,
           ),
           ElevatedButton(
-              onPressed: () => categoryCustomAddDialog(context),
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.green,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12)),
+                backgroundColor: AppColors.mediumBlue,
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                elevation: 4,
-                shadowColor: Colors.black.withOpacity(0.3),
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
               ),
+              onPressed: () => categoryCustomAddDialog(context),
               child: const Text("Add Category",
                   style: CustomTextStyles.addCategory))
         ],

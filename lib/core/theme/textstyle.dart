@@ -35,7 +35,7 @@ class CustomTextStyles {
   static const TextStyle deleteTitle = TextStyle(
     fontSize: 20,
     fontWeight: FontWeight.w600,
-    color: Colors.black,
+    color: Colors.white,
   );
   static const TextStyle categoriesTitle = TextStyle(
     fontSize: 25,
@@ -44,14 +44,15 @@ class CustomTextStyles {
   );
   static const TextStyle deleteMessage = TextStyle(
     fontSize: 16,
-    color: Colors.black87,
+    color: Colors.white,
   );
   static const TextStyle yesORno = TextStyle(
     fontSize: 14,
-    fontWeight: FontWeight.w500,
+    color: Colors.black,
+    fontWeight: FontWeight.bold,
   );
   static const TextStyle header = TextStyle(
-    color: Colors.black,
+    color: Colors.white,
     fontWeight: FontWeight.bold,
     fontSize: 16,
   );

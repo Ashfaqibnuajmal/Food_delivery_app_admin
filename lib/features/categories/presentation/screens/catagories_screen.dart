@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mera_web/core/theme/web_color.dart';
 import 'package:mera_web/features/categories/presentation/widget/body.dart';
 import 'package:mera_web/features/categories/presentation/widget/header.dart';
 
@@ -10,7 +11,7 @@ class CatagoriesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blueAccent,
+      backgroundColor: AppColors.darkBlue,
       body: Padding(
         padding: const EdgeInsets.all(13),
         child: SingleChildScrollView(

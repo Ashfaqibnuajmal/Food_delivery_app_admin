@@ -4,10 +4,8 @@ import 'package:mera_web/features/auth/screens/login_screen.dart';
 import 'package:mera_web/features/categories/provider/pick_image.dart';
 import 'package:mera_web/features/categories/services/category_sevices.dart';
 import 'package:mera_web/core/constants/firebase_options.dart';
-import 'package:mera_web/features/expances/presentation/expance_add_dilog.dart';
-import 'package:mera_web/features/expances/presentation/expance_screen.dart';
 import 'package:mera_web/features/expances/provider/expance_provider.dart';
-import 'package:mera_web/text.dart';
+import 'package:mera_web/features/home/home.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -43,7 +41,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: ExpanceScreen(), // 👈 Launches your expense page UI
+        home: LoginScreen(), // 👈 Launches your expense page UI
       ),
     );
   }

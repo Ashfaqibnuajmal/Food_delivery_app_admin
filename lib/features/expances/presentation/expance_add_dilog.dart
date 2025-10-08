@@ -1,11 +1,12 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:mera_web/core/theme/web_color.dart';
 import 'package:mera_web/features/expances/provider/expance_provider.dart';
 import 'package:provider/provider.dart';
 
 Future<void> customAddExpenseDialog({
   required BuildContext context,
-  required void Function() onPressed, // to call provider.addExpense()
+  required void Function() onPressed,
 }) async {
   return showDialog(
     context: context,
@@ -13,7 +14,7 @@ Future<void> customAddExpenseDialog({
       final provider = Provider.of<ExpenseProvider>(context);
 
       return Dialog(
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.deepBlue, // Theme background
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
         insetPadding: const EdgeInsets.symmetric(horizontal: 100, vertical: 50),
         child: Padding(
@@ -24,7 +25,7 @@ Future<void> customAddExpenseDialog({
               // ✅ Date Picker
               ElevatedButton.icon(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.black,
+                  backgroundColor: AppColors.mediumBlue, // Theme button color
                   padding:
                       const EdgeInsets.symmetric(vertical: 18, horizontal: 20),
                 ),
@@ -35,18 +36,28 @@ Future<void> customAddExpenseDialog({
                       initialDate: DateTime.now(),
                       firstDate: DateTime(2020),
                       lastDate: DateTime(2100),
+                      builder: (context, child) => Theme(
+                        data: ThemeData.dark().copyWith(
+                          colorScheme: const ColorScheme.dark(
+                            primary: AppColors.lightBlue,
+                            surface: AppColors.deepBlue,
+                            onSurface: Colors.white,
+                          ),
+                        ),
+                        child: child!,
+                      ),
                     );
                     if (picked != null) provider.setDate(picked);
                   } catch (e) {
                     log("Date Picker Error: $e");
                   }
                 },
-                icon: const Icon(Icons.date_range, color: Colors.white),
+                icon: const Icon(Icons.date_range, color: AppColors.pureWhite),
                 label: Text(
                   provider.date != null
                       ? provider.date.toString().split(" ")[0]
                       : "Pick Date",
-                  style: const TextStyle(color: Colors.white),
+                  style: const TextStyle(color: AppColors.pureWhite),
                 ),
               ),
               const SizedBox(height: 20),
@@ -55,8 +66,8 @@ Future<void> customAddExpenseDialog({
               DropdownButtonFormField<String>(
                 decoration: inputDecoration("Category"),
                 value: provider.category,
-                dropdownColor: Colors.black,
-                style: const TextStyle(color: Colors.white),
+                dropdownColor: AppColors.deepBlue,
+                style: const TextStyle(color: AppColors.pureWhite),
                 items: const [
                   DropdownMenuItem(
                       value: "Electricity", child: Text("Electricity")),
@@ -76,10 +87,11 @@ Future<void> customAddExpenseDialog({
               TextFormField(
                 keyboardType: TextInputType.number,
                 decoration: inputDecoration("Enter Amount"),
-                style: const TextStyle(color: Colors.white),
+                style: const TextStyle(color: AppColors.pureWhite),
                 onChanged: (val) {
-                  if (val.isNotEmpty)
+                  if (val.isNotEmpty) {
                     provider.setAmount(int.tryParse(val) ?? 0);
+                  }
                 },
               ),
               const SizedBox(height: 20),
@@ -88,8 +100,8 @@ Future<void> customAddExpenseDialog({
               DropdownButtonFormField<String>(
                 decoration: inputDecoration("Status"),
                 value: provider.status,
-                dropdownColor: Colors.black,
-                style: const TextStyle(color: Colors.white),
+                dropdownColor: AppColors.deepBlue,
+                style: const TextStyle(color: AppColors.pureWhite),
                 items: const [
                   DropdownMenuItem(value: "Paid", child: Text("Paid")),
                   DropdownMenuItem(value: "Consumed", child: Text("Consumed")),
@@ -103,11 +115,11 @@ Future<void> customAddExpenseDialog({
               // ✅ Add Button
               ElevatedButton(
                 onPressed: () {
-                  onPressed(); // trigger provider.addExpense or services
-                  Navigator.pop(context); // close dialog
+                  onPressed();
+                  Navigator.pop(context);
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.green,
+                  backgroundColor: AppColors.lightBlue,
                   padding:
                       const EdgeInsets.symmetric(vertical: 18, horizontal: 24),
                   shape: RoundedRectangleBorder(
@@ -116,7 +128,7 @@ Future<void> customAddExpenseDialog({
                 ),
                 child: const Text(
                   "Add Expense",
-                  style: TextStyle(fontSize: 16, color: Colors.white),
+                  style: TextStyle(fontSize: 16, color: AppColors.pureWhite),
                 ),
               ),
             ],
@@ -132,14 +144,14 @@ InputDecoration inputDecoration(String label) {
     hintText: label,
     hintStyle: const TextStyle(color: Colors.white70),
     filled: true,
-    fillColor: Colors.black,
+    fillColor: AppColors.darkBlue, // theme background for inputs
     border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
     enabledBorder: OutlineInputBorder(
       borderSide: const BorderSide(color: Colors.transparent),
       borderRadius: BorderRadius.circular(8),
     ),
     focusedBorder: OutlineInputBorder(
-      borderSide: const BorderSide(color: Colors.white, width: 2),
+      borderSide: const BorderSide(color: AppColors.lightBlue, width: 2),
       borderRadius: BorderRadius.circular(8),
     ),
   );

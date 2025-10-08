@@ -1,7 +1,7 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:mera_web/core/functions/image_functions.dart';
-import 'package:mera_web/core/theme/textstyle.dart';
+import 'package:mera_web/core/theme/web_color.dart';
 import 'package:mera_web/core/widgets/customtextfield.dart';
 import 'package:mera_web/features/categories/provider/pick_image.dart';
 import 'package:provider/provider.dart';
@@ -18,17 +18,15 @@ custemAddDialog({
       final imageProvider = Provider.of<ImageProviderModel>(context);
 
       return Dialog(
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.deepBlue,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-        insetPadding: const EdgeInsets.symmetric(
-            horizontal: 100, vertical: 50), // More space
+        insetPadding: const EdgeInsets.symmetric(horizontal: 100, vertical: 50),
         child: Padding(
           padding: const EdgeInsets.all(16).copyWith(bottom: 20),
           child: Column(
-            mainAxisSize:
-                MainAxisSize.min, // Makes dialog adapt to content size
+            mainAxisSize: MainAxisSize.min,
             children: [
-              // Image Picker Container
+              // 🖼 Image Picker
               GestureDetector(
                 onTap: () async {
                   try {
@@ -41,8 +39,8 @@ custemAddDialog({
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: Colors.blueGrey, width: 2),
-                    color: Colors.grey[200],
+                    border: Border.all(color: AppColors.mediumBlue, width: 2),
+                    color: AppColors.darkBlue,
                   ),
                   height: 200,
                   width: double.infinity,
@@ -56,34 +54,43 @@ custemAddDialog({
                           : const Center(
                               child: Text(
                                 "Click here to add image!",
-                                style: TextStyle(color: Colors.black),
+                                style: TextStyle(
+                                  color: AppColors.pureWhite,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ),
                 ),
               ),
+
               const SizedBox(height: 20),
 
-              // Category Name TextField
+              // 📝 Category Name TextField
               CustemTextFIeld(
                 hintText: "Enter category name",
                 controller: controller,
               ),
+
               const SizedBox(height: 20),
 
-              // Add Category Button
+              // ➕ Add Category Button
               ElevatedButton(
                 onPressed: onpressed,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.green,
+                  backgroundColor: AppColors.lightBlue,
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
+                      const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
                 ),
                 child: const Text(
                   "Add Category",
-                  style: CustomTextStyles.addCategory,
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: AppColors.pureWhite,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ],

@@ -1,42 +1,47 @@
 import 'package:flutter/material.dart';
 import 'package:mera_web/core/theme/textstyle.dart';
+import 'package:mera_web/core/theme/web_color.dart';
 
-customDeleteDilog(BuildContext context, VoidCallback? onPress) {
+customDeleteDialog(BuildContext context, VoidCallback? onPress) {
   return showDialog(
     context: context,
     builder: (BuildContext context) {
       return Dialog(
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.deepBlue,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
         ),
         child: Padding(
-          padding: const EdgeInsets.all(10),
+          padding: const EdgeInsets.all(16),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              // Delete icon in red circle
+              // 🔴 Delete Icon
               Container(
                 width: 56,
                 height: 56,
                 decoration: const BoxDecoration(
-                  color: Color(0xFFE53E3E),
+                  color: AppColors.errorRed,
                   shape: BoxShape.circle,
                 ),
                 child: const Icon(
-                  Icons.question_mark,
-                  color: Colors.white,
+                  Icons.delete_forever,
+                  color: AppColors.pureWhite,
                   size: 28,
                 ),
               ),
+
               const SizedBox(height: 16),
 
-              // Title
+              // 📝 Title
               const Text(
                 'Delete',
                 style: CustomTextStyles.deleteTitle,
               ),
+
               const SizedBox(height: 12),
+
+              // ⚠️ Message
               const Text(
                 'Are you sure you want to delete this item?',
                 style: CustomTextStyles.deleteMessage,
@@ -45,42 +50,49 @@ customDeleteDilog(BuildContext context, VoidCallback? onPress) {
 
               const SizedBox(height: 24),
 
-              // Buttons
+              // ✅ Buttons
               Row(
                 children: [
-                  // NO button
+                  // ❌ NO button
                   Expanded(
                     child: TextButton(
                       onPressed: () {
                         Navigator.pop(context);
                       },
                       style: TextButton.styleFrom(
-                        backgroundColor: const Color(0xFFE5E5E5),
-                        foregroundColor: Colors.black87,
+                        backgroundColor: AppColors.lightGrey,
+                        foregroundColor: AppColors.pureWhite,
                         padding: const EdgeInsets.symmetric(vertical: 12),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
                         ),
                       ),
-                      child: const Text('NO', style: CustomTextStyles.yesORno),
+                      child: const Text(
+                        'NO',
+                        style: CustomTextStyles.yesORno,
+                      ),
                     ),
                   ),
+
                   const SizedBox(width: 12),
 
-                  // YES button
+                  // ✅ YES button
                   Expanded(
                     child: ElevatedButton(
                       onPressed: onPress,
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFFE53E3E),
-                        foregroundColor: Colors.white,
+                        backgroundColor: AppColors.errorRed,
+                        foregroundColor: AppColors.pureWhite,
                         padding: const EdgeInsets.symmetric(vertical: 12),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
                         ),
                         elevation: 0,
                       ),
-                      child: const Text('YES', style: CustomTextStyles.yesORno),
+                      child: const Text(
+                        'YES',
+                        style: CustomTextStyles.yesORno,
+                      ),
                     ),
                   ),
                 ],
