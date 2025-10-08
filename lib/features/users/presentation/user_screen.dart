@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mera_web/features/users/presentation/widget/voice_search.bar.dart';
 import 'package:provider/provider.dart';
 import 'package:mera_web/core/theme/web_color.dart';
 import 'package:mera_web/features/users/model/user_model.dart';
@@ -30,28 +31,7 @@ class UsersScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 25),
-
-              // 🔍 Search Bar
-              Container(
-                height: 45,
-                padding: const EdgeInsets.symmetric(horizontal: 14),
-                decoration: BoxDecoration(
-                  color: AppColors.mediumBlue,
-                  borderRadius: BorderRadius.circular(30),
-                ),
-                child: TextField(
-                  style: const TextStyle(color: AppColors.pureWhite),
-                  decoration: const InputDecoration(
-                    hintText: 'Search by name...',
-                    hintStyle: TextStyle(color: AppColors.pureWhite),
-                    border: InputBorder.none,
-                    icon: Icon(Icons.search, color: AppColors.pureWhite),
-                  ),
-                  onChanged: context
-                      .read<UserSearchProvider>()
-                      .updateQuery, // ⬅ provider listens
-                ),
-              ),
+              const VoiceSearchBar(),
               const SizedBox(height: 30),
 
               // 🔹 Summary Cards
