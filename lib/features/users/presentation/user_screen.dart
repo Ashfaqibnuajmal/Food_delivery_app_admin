@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:mera_web/core/theme/web_color.dart';
 import 'package:mera_web/features/users/model/user_model.dart';
 import 'package:mera_web/features/users/services/user_services.dart';
+import 'package:mera_web/features/users/provider/user_search_provider.dart';
 
 class UsersScreen extends StatelessWidget {
   const UsersScreen({super.key});
@@ -18,17 +20,41 @@ class UsersScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // 🔹 Title
               const Text(
-                "User Management",
+                'User Management',
                 style: TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.bold,
                   color: AppColors.pureWhite,
                 ),
               ),
+              const SizedBox(height: 25),
+
+              // 🔍 Search Bar
+              Container(
+                height: 45,
+                padding: const EdgeInsets.symmetric(horizontal: 14),
+                decoration: BoxDecoration(
+                  color: AppColors.mediumBlue,
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                child: TextField(
+                  style: const TextStyle(color: AppColors.pureWhite),
+                  decoration: const InputDecoration(
+                    hintText: 'Search by name...',
+                    hintStyle: TextStyle(color: AppColors.pureWhite),
+                    border: InputBorder.none,
+                    icon: Icon(Icons.search, color: AppColors.pureWhite),
+                  ),
+                  onChanged: context
+                      .read<UserSearchProvider>()
+                      .updateQuery, // ⬅ provider listens
+                ),
+              ),
               const SizedBox(height: 30),
 
-              // ✅ Summary Cards Row (Realtime)
+              // 🔹 Summary Cards
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
@@ -66,7 +92,7 @@ class UsersScreen extends StatelessWidget {
               ),
               const SizedBox(height: 40),
 
-              // ✅ User Table (Realtime)
+              // 🔁 Firestore Stream + Provider update
               Expanded(
                 child: StreamBuilder<List<UserModel>>(
                   stream: userService.fetchUsers(),
@@ -77,123 +103,21 @@ class UsersScreen extends StatelessWidget {
                             color: AppColors.pureWhite),
                       );
                     }
-
                     if (!snapshot.hasData || snapshot.data!.isEmpty) {
                       return const Center(
-                        child: Text(
-                          "No users found.",
-                          style: TextStyle(color: AppColors.pureWhite),
-                        ),
+                        child: Text('No users found',
+                            style: TextStyle(color: AppColors.pureWhite)),
                       );
                     }
 
-                    final allUsers = snapshot.data!;
+                    // ✅ update provider directly (one‑way) — no loop
+                    context.read<UserSearchProvider>().setUsers(snapshot.data!);
 
-                    return Container(
-                      decoration: BoxDecoration(
-                        color: AppColors.lightBlue.withOpacity(0.1),
-                        border: Border.all(color: AppColors.deepBlue, width: 2),
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      child: Column(
-                        children: [
-                          // ✅ Table Header
-                          Container(
-                            padding: const EdgeInsets.symmetric(vertical: 14),
-                            decoration: const BoxDecoration(
-                              color: AppColors.deepBlue,
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(30),
-                                topRight: Radius.circular(30),
-                              ),
-                            ),
-                            child: const Row(
-                              children: [
-                                Expanded(
-                                  child: Center(
-                                    child: Text(
-                                      "Name",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 16,
-                                          color: AppColors.pureWhite),
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-                                  child: Center(
-                                    child: Text(
-                                      "Phone No",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 16,
-                                          color: AppColors.pureWhite),
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-                                  child: Center(
-                                    child: Text(
-                                      "Email",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 16,
-                                          color: AppColors.pureWhite),
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-                                  child: Center(
-                                    child: Text(
-                                      "Status",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 16,
-                                          color: AppColors.pureWhite),
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-                                  child: Center(
-                                    child: Text(
-                                      "Action",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 16,
-                                          color: AppColors.pureWhite),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-
-                          // ✅ Table Rows (Realtime)
-                          Expanded(
-                            child: ListView.builder(
-                              itemCount: allUsers.length,
-                              itemBuilder: (context, index) {
-                                final user = allUsers[index];
-                                return UserRow(
-                                  user: user,
-                                  onToggle: () {
-                                    if (user.status == "active") {
-                                      userService.blockUser(user.uid);
-                                    } else {
-                                      userService.unblockUser(user.uid);
-                                    }
-                                  },
-                                );
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
-                    );
+                    // ✅ build table body that listens to provider
+                    return const _UserTableBody();
                   },
                 ),
               ),
-
               const SizedBox(height: 20),
             ],
           ),
@@ -203,9 +127,9 @@ class UsersScreen extends StatelessWidget {
   }
 }
 
-//
+//───────────────────────────────────────
 // 🧭 Summary Card Widget
-//
+//───────────────────────────────────────
 class SummaryCard extends StatelessWidget {
   final String title;
   final String count;
@@ -266,83 +190,148 @@ class SummaryCard extends StatelessWidget {
   }
 }
 
-//
-// 👥 User Table Row Widget
-//
-class UserRow extends StatelessWidget {
-  final UserModel user;
-  final VoidCallback onToggle;
-
-  const UserRow({
-    super.key,
-    required this.user,
-    required this.onToggle,
-  });
+//───────────────────────────────────────
+// 👥 Table Body (Provider consumer)
+//───────────────────────────────────────
+class _UserTableBody extends StatelessWidget {
+  const _UserTableBody();
 
   @override
   Widget build(BuildContext context) {
-    final isActive = user.status.toLowerCase() == "active";
+    final provider = context.watch<UserSearchProvider>();
+    final userService = UserServices(); // for block/unblock actions
+    final filtered = provider.filteredUsers;
 
     return Container(
-      color: AppColors.lightBlue.withOpacity(0.05),
-      padding: const EdgeInsets.symmetric(vertical: 14),
-      child: Row(
+      decoration: BoxDecoration(
+        color: AppColors.lightBlue.withOpacity(0.1),
+        border: Border.all(color: AppColors.deepBlue, width: 2),
+        borderRadius: BorderRadius.circular(30),
+      ),
+      child: Column(
         children: [
-          Expanded(
-            child: Center(
-              child: Text(
-                user.name,
-                style: const TextStyle(color: AppColors.pureWhite),
+          // Header Row
+          Container(
+            height: 50,
+            decoration: const BoxDecoration(
+              color: AppColors.deepBlue,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(28),
+                topRight: Radius.circular(28),
               ),
             ),
-          ),
-          Expanded(
-            child: Center(
-              child: Text(
-                user.phone,
-                style: const TextStyle(color: AppColors.pureWhite),
-              ),
+            child: const Row(
+              children: [
+                HeaderCell(title: 'Name'),
+                HeaderCell(title: 'Phone No'),
+                HeaderCell(title: 'Email'),
+                HeaderCell(title: 'Status'),
+                HeaderCell(title: 'Action'),
+              ],
             ),
           ),
+
+          // Filtered data rows
           Expanded(
-            child: Center(
-              child: Text(
-                user.email,
-                style: const TextStyle(color: AppColors.pureWhite),
-              ),
-            ),
-          ),
-          Expanded(
-            child: Center(
-              child: Text(
-                isActive ? "Active" : "Blocked",
-                style: TextStyle(
-                  color: isActive ? Colors.green : Colors.red,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-          ),
-          Expanded(
-            child: Center(
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: isActive ? AppColors.deepBlue : Colors.green,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 22, vertical: 10),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8)),
-                ),
-                onPressed: onToggle,
-                child: Text(
-                  isActive ? "Block" : "Unblock",
-                  style: const TextStyle(color: AppColors.pureWhite),
-                ),
-              ),
+            child: ListView.builder(
+              itemCount: filtered.length,
+              itemBuilder: (context, i) {
+                final user = filtered[i];
+                final isActive = user.status.toLowerCase() == 'active';
+                return Container(
+                  padding: const EdgeInsets.symmetric(vertical: 12),
+                  decoration: const BoxDecoration(
+                    border: Border(bottom: BorderSide(color: Colors.black26)),
+                  ),
+                  child: Row(
+                    children: [
+                      DataCellText(user.name),
+                      DataCellText(user.phone),
+                      DataCellText(user.email),
+                      Expanded(
+                        child: Center(
+                          child: Text(
+                            isActive ? 'Active' : 'Blocked',
+                            style: TextStyle(
+                              color: isActive ? Colors.green : Colors.red,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: Center(
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor:
+                                  isActive ? AppColors.deepBlue : Colors.green,
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 18, vertical: 8),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                            ),
+                            onPressed: () {
+                              if (isActive) {
+                                userService.blockUser(user.uid);
+                              } else {
+                                userService.unblockUser(user.uid);
+                              }
+                            },
+                            child: Text(
+                              isActive ? 'Block' : 'Unblock',
+                              style:
+                                  const TextStyle(color: AppColors.pureWhite),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
             ),
           ),
         ],
       ),
     );
   }
+}
+
+//───────────────────────────────────────
+// 🧩 Reusable header + cells
+//───────────────────────────────────────
+class HeaderCell extends StatelessWidget {
+  final String title;
+  const HeaderCell({super.key, required this.title});
+
+  @override
+  Widget build(BuildContext context) => Expanded(
+        child: Center(
+          child: Text(
+            title,
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 15,
+              color: AppColors.pureWhite,
+            ),
+          ),
+        ),
+      );
+}
+
+class DataCellText extends StatelessWidget {
+  final String data;
+  const DataCellText(this.data, {super.key});
+
+  @override
+  Widget build(BuildContext context) => Expanded(
+        child: Center(
+          child: Text(
+            data,
+            style: const TextStyle(color: AppColors.pureWhite),
+            overflow: TextOverflow.ellipsis,
+          ),
+        ),
+      );
 }

@@ -3,7 +3,7 @@ class UserModel {
   final String name;
   final String email;
   final String phone;
-  final String status;
+  late final String status;
 
   UserModel({
     required this.uid,
