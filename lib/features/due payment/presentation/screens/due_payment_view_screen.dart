@@ -2,8 +2,8 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:mera_web/core/theme/web_color.dart';
 import 'package:mera_web/features/due%20payment/model/payment_entry_model.dart';
-import 'package:mera_web/features/due%20payment/presentation/screens/entry_add.dart';
-import 'package:mera_web/features/due%20payment/presentation/screens/entry_edit.dart';
+import 'package:mera_web/features/due%20payment/presentation/widget/entry_add.dart';
+import 'package:mera_web/features/due%20payment/presentation/widget/entry_edit.dart';
 import 'package:mera_web/features/due%20payment/services/due_payment_services.dart';
 
 class DuePaymentViewScreen extends StatelessWidget {
@@ -42,7 +42,7 @@ class DuePaymentViewScreen extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        "$userName's Due Details",
+                        "${userName[0].toUpperCase()}${userName.substring(1)}'s Due Details",
                         style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
@@ -102,8 +102,10 @@ class DuePaymentViewScreen extends StatelessWidget {
                         if (!snapshot.hasData || snapshot.data!.isEmpty) {
                           return const Center(
                             child: Text(
-                              "No entries yet",
-                              style: TextStyle(color: AppColors.pureWhite),
+                              "No entries yet!",
+                              style: TextStyle(
+                                  color: AppColors.pureWhite,
+                                  fontWeight: FontWeight.bold),
                             ),
                           );
                         }
@@ -126,7 +128,7 @@ class DuePaymentViewScreen extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  userName,
+                                  "${userName[0].toUpperCase()}${userName.substring(1)}",
                                   style: const TextStyle(
                                     fontSize: 20,
                                     color: AppColors.pureWhite,
@@ -149,9 +151,8 @@ class DuePaymentViewScreen extends StatelessWidget {
                             Text(
                               "Total Balance Due: ₹${balance.toStringAsFixed(2)}",
                               style: TextStyle(
-                                  color: balance > 0
-                                      ? Colors.redAccent.shade200
-                                      : Colors.greenAccent.shade200,
+                                  color:
+                                      balance > 0 ? Colors.red : Colors.green,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 16),
                             ),
@@ -316,18 +317,8 @@ class DuePaymentViewScreen extends StatelessWidget {
                                             child: Center(
                                               child: ElevatedButton(
                                                 style: ElevatedButton.styleFrom(
-                                                  backgroundColor:
-                                                      AppColors.deepBlue,
-                                                  padding: const EdgeInsets
-                                                      .symmetric(
-                                                      horizontal: 16,
-                                                      vertical: 8),
-                                                  shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            8),
-                                                  ),
-                                                ),
+                                                    backgroundColor:
+                                                        AppColors.deepBlue),
                                                 onPressed: () {
                                                   customEditEntryDialog(
                                                     context: context,
@@ -348,17 +339,8 @@ class DuePaymentViewScreen extends StatelessWidget {
                                             child: Center(
                                               child: ElevatedButton(
                                                 style: ElevatedButton.styleFrom(
-                                                  backgroundColor: Colors.red,
-                                                  padding: const EdgeInsets
-                                                      .symmetric(
-                                                      horizontal: 16,
-                                                      vertical: 8),
-                                                  shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            8),
-                                                  ),
-                                                ),
+                                                    backgroundColor:
+                                                        Colors.red),
                                                 onPressed: () async {
                                                   await service
                                                       .deletePaymentEntry(
