@@ -4,11 +4,11 @@ import 'package:mera_web/core/theme/web_color.dart';
 import 'package:mera_web/features/categories/presentation/screens/catagories_screen.dart';
 import 'package:mera_web/features/chat/chat_screen.dart';
 import 'package:mera_web/features/dashboard/dashboard_screen.dart';
+import 'package:mera_web/features/due%20payment/presentation/screens/due_payment_screen.dart';
 import 'package:mera_web/features/expances/presentation/expance_screen.dart';
 import 'package:mera_web/features/foods/fooditem_screen.dart';
 import 'package:mera_web/features/orders/order_screen.dart';
 import 'package:mera_web/features/users/presentation/screens/user_screen.dart';
-import 'package:mera_web/text.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -107,7 +107,16 @@ class _HomePageState extends State<HomePage> {
                 onTap: (index, _) {
                   sideMenu.changePage(index);
                 },
-                icon: const Icon(Icons.category, color: AppColors.lightBlue),
+                icon: const Icon(Icons.currency_exchange_rounded,
+                    color: AppColors.lightBlue),
+              ),
+              SideMenuItem(
+                title: 'Due Payment',
+                onTap: (index, _) {
+                  sideMenu.changePage(index);
+                },
+                icon:
+                    const Icon(Icons.attach_money, color: AppColors.lightBlue),
               ),
             ],
           ),
@@ -123,6 +132,7 @@ class _HomePageState extends State<HomePage> {
                 ChatScreen(),
                 CatagoriesScreen(),
                 ExpanceScreen(),
+                DuePaymentScreen(),
               ],
             ),
           ),

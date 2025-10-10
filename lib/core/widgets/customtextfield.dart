@@ -80,7 +80,8 @@ class _CustemTextFIeldState extends State<CustemTextFIeld> {
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
-              borderSide: BorderSide(color: AppColors.lightBlue, width: 2),
+              borderSide:
+                  const BorderSide(color: AppColors.lightBlue, width: 2),
             ),
           ),
         ),
