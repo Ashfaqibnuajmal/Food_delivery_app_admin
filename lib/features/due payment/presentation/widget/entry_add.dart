@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:mera_web/core/theme/web_color.dart';
 import 'package:mera_web/features/due%20payment/model/payment_entry_model.dart';
+import 'package:mera_web/features/due%20payment/presentation/widget/due_payment_add.dart';
 import 'package:mera_web/features/due%20payment/services/due_payment_services.dart';
 import 'package:uuid/uuid.dart';
 
@@ -177,23 +178,5 @@ Future<void> customAddEntryDialog({
         ),
       );
     },
-  );
-}
-
-InputDecoration inputDecoration(String label) {
-  return InputDecoration(
-    hintText: label,
-    hintStyle: const TextStyle(color: Colors.white70),
-    filled: true,
-    fillColor: AppColors.darkBlue,
-    border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
-    enabledBorder: OutlineInputBorder(
-      borderSide: const BorderSide(color: Colors.transparent),
-      borderRadius: BorderRadius.circular(8),
-    ),
-    focusedBorder: OutlineInputBorder(
-      borderSide: const BorderSide(color: AppColors.lightBlue, width: 2),
-      borderRadius: BorderRadius.circular(8),
-    ),
   );
 }

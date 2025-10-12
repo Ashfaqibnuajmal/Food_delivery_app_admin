@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:mera_web/core/theme/textstyle.dart';
 import 'package:mera_web/core/theme/web_color.dart';
 import 'package:mera_web/features/categories/models/category_model.dart';
-import 'package:mera_web/features/categories/presentation/widget/add_dilalog_widget.dart';
+import 'package:mera_web/features/categories/presentation/widget/add_category.dart';
 import 'package:mera_web/features/categories/presentation/widget/confiorm_dilog.dart';
 import 'package:mera_web/features/categories/provider/pick_image.dart';
 import 'package:mera_web/features/categories/services/category_sevices.dart';

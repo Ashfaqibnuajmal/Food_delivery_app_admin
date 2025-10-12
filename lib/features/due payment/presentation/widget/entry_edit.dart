@@ -145,6 +145,7 @@ Future<void> customEditEntryDialog({
                       if (context.mounted) Navigator.pop(context);
                     } catch (e) {
                       log("❌ Error updating entry: $e");
+                      // ignore: use_build_context_synchronously
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
                           content: Text("Error updating entry"),
