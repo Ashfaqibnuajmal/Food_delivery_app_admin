@@ -4,6 +4,8 @@ import 'package:mera_web/core/theme/web_color.dart';
 import 'package:mera_web/features/expances/provider/expance_provider.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../core/widgets/input_decoration.dart';
+
 Future<void> customAddExpenseDialog({
   required BuildContext context,
   required void Function() onPressed,
@@ -136,23 +138,5 @@ Future<void> customAddExpenseDialog({
         ),
       );
     },
-  );
-}
-
-InputDecoration inputDecoration(String label) {
-  return InputDecoration(
-    hintText: label,
-    hintStyle: const TextStyle(color: Colors.white70),
-    filled: true,
-    fillColor: AppColors.darkBlue, // theme background for inputs
-    border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
-    enabledBorder: OutlineInputBorder(
-      borderSide: const BorderSide(color: Colors.transparent),
-      borderRadius: BorderRadius.circular(8),
-    ),
-    focusedBorder: OutlineInputBorder(
-      borderSide: const BorderSide(color: AppColors.lightBlue, width: 2),
-      borderRadius: BorderRadius.circular(8),
-    ),
   );
 }

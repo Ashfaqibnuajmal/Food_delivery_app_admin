@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mera_web/core/theme/web_color.dart';
-import 'package:mera_web/features/categories/presentation/widget/body.dart';
-import 'package:mera_web/features/categories/presentation/widget/header.dart';
+import 'package:mera_web/features/categories/presentation/widget/category_body.dart';
+import 'package:mera_web/features/categories/presentation/widget/category_header.dart';
 
 // ignore: must_be_immutable
 class CatagoriesScreen extends StatelessWidget {

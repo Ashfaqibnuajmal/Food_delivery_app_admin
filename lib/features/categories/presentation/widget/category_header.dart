@@ -3,7 +3,7 @@ import 'package:mera_web/core/theme/textstyle.dart';
 import 'package:mera_web/core/theme/web_color.dart';
 import 'package:mera_web/core/widgets/cutom_snackbar.dart';
 import 'package:mera_web/features/categories/presentation/widget/add_category.dart';
-import 'package:mera_web/features/categories/provider/pick_image.dart';
+import 'package:mera_web/core/provider/pick_image.dart';
 import 'package:mera_web/features/categories/services/category_sevices.dart';
 import 'package:provider/provider.dart';
 

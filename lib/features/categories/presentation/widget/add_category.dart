@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:mera_web/core/functions/image_functions.dart';
 import 'package:mera_web/core/theme/web_color.dart';
 import 'package:mera_web/core/widgets/customtextfield.dart';
-import 'package:mera_web/features/categories/provider/pick_image.dart';
+import 'package:mera_web/core/provider/pick_image.dart';
 import 'package:provider/provider.dart';
 
 custemAddDialog({
