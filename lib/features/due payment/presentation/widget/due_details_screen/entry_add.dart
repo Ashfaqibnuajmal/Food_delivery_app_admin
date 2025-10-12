@@ -2,7 +2,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:mera_web/core/theme/web_color.dart';
 import 'package:mera_web/features/due%20payment/model/payment_entry_model.dart';
-import 'package:mera_web/features/due%20payment/presentation/widget/due_payment_add.dart';
+import 'package:mera_web/features/due%20payment/presentation/widget/due_payment_screen/due_payment_add.dart';
 import 'package:mera_web/features/due%20payment/services/due_payment_services.dart';
 import 'package:uuid/uuid.dart';
 
