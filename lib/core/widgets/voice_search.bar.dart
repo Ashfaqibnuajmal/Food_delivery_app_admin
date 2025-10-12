@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mera_web/features/users/provider/user_search_provider.dart';
+import 'package:mera_web/core/provider/user_search_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:mera_web/core/theme/web_color.dart';
 

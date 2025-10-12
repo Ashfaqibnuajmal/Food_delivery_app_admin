@@ -14,8 +14,8 @@ class LoginScreen extends StatelessWidget {
   final TextEditingController _passwordController = TextEditingController();
 
   void _login(BuildContext context) {
-    const String validName = "ashfaq";
-    const String validPassword = "21072005";
+    const String validName = "a";
+    const String validPassword = "2";
 
     if (_formKey.currentState!.validate()) {
       if (_nameController.text == validName &&

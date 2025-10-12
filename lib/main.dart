@@ -6,7 +6,7 @@ import 'package:mera_web/features/categories/services/category_sevices.dart';
 import 'package:mera_web/core/constants/firebase_options.dart';
 import 'package:mera_web/features/expances/provider/expance_provider.dart';
 import 'package:mera_web/features/home/home.dart';
-import 'package:mera_web/features/users/provider/user_search_provider.dart';
+import 'package:mera_web/core/provider/user_search_provider.dart';
 import 'package:provider/provider.dart';
 
 void main() async {

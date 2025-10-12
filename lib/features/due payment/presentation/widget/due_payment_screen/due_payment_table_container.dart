@@ -3,7 +3,7 @@ import 'package:mera_web/features/due%20payment/model/due_user_model.dart';
 import 'package:mera_web/features/due%20payment/presentation/widget/due_payment_screen/due_payment_table.dart';
 import 'package:mera_web/features/due%20payment/presentation/widget/due_payment_screen/due_payment_table_header.dart';
 import 'package:mera_web/features/due%20payment/services/due_payment_services.dart';
-import 'package:mera_web/features/users/provider/user_search_provider.dart';
+import 'package:mera_web/core/provider/user_search_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:mera_web/core/theme/web_color.dart';
 
