@@ -1,5 +1,6 @@
 // Summary Card Widget
 import 'package:flutter/material.dart';
+import 'package:mera_web/core/theme/textstyle.dart';
 import 'package:mera_web/core/theme/web_color.dart';
 
 class SummaryCard extends StatelessWidget {
@@ -30,11 +31,10 @@ class SummaryCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(title,
-                    style: const TextStyle(
-                        fontSize: 16,
-                        color: AppColors.pureWhite,
-                        fontWeight: FontWeight.bold)),
+                Text(
+                  title,
+                  style: CustomTextStyles.header,
+                ),
                 Container(
                   height: 30,
                   width: 30,
@@ -48,10 +48,7 @@ class SummaryCard extends StatelessWidget {
             const Spacer(),
             Text(
               amount.toStringAsFixed(2),
-              style: const TextStyle(
-                  fontSize: 18,
-                  color: AppColors.pureWhite,
-                  fontWeight: FontWeight.bold),
+              style: CustomTextStyles.header,
             ),
           ],
         ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mera_web/core/theme/textstyle.dart';
 import 'package:mera_web/core/theme/web_color.dart';
 import 'package:mera_web/features/due%20payment/model/payment_entry_model.dart';
 import 'package:mera_web/features/due%20payment/presentation/widget/due_details_screen/due_details_header_info.dart';
@@ -45,12 +46,8 @@ class UserEntriesCard extends StatelessWidget {
               }
               if (!snapshot.hasData || snapshot.data!.isEmpty) {
                 return const Center(
-                  child: Text(
-                    "No entries yet!",
-                    style: TextStyle(
-                        color: AppColors.pureWhite,
-                        fontWeight: FontWeight.bold),
-                  ),
+                  child: Text("No entries yet!",
+                      style: CustomTextStyles.buttonText),
                 );
               }
 

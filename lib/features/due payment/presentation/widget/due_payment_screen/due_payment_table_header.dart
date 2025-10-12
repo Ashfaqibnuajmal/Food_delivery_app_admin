@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mera_web/core/theme/textstyle.dart';
 import 'package:mera_web/core/theme/web_color.dart';
 
 class DuePaymentTableHeader extends StatelessWidget {
@@ -41,11 +42,7 @@ class HeaderCell extends StatelessWidget {
       child: Center(
         child: Text(
           title,
-          style: const TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 16,
-            color: AppColors.pureWhite,
-          ),
+          style: CustomTextStyles.header,
         ),
       ),
     );

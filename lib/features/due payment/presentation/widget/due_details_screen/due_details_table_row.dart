@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:mera_web/core/theme/textstyle.dart';
 import 'package:mera_web/core/theme/web_color.dart';
 import 'package:mera_web/features/due%20payment/model/payment_entry_model.dart';
 import 'package:mera_web/features/due%20payment/presentation/widget/due_details_screen/entry_edit.dart';
@@ -31,26 +32,21 @@ class DuePaymentRow extends StatelessWidget {
             child: Center(
               child: Text(
                 entry.date.toString().split(" ")[0],
-                style: const TextStyle(color: AppColors.pureWhite),
+                style: CustomTextStyles.text,
               ),
             ),
           ),
           Expanded(
             child: Center(
-              child: Text(
-                entry.status,
-                style: TextStyle(
-                  color: entry.status == "Paid" ? Colors.green : Colors.red,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+              child: Text(entry.status,
+                  style: CustomTextStyles.status(entry.status)),
             ),
           ),
           Expanded(
             child: Center(
               child: Text(
                 "₹${entry.amount.toStringAsFixed(2)}",
-                style: const TextStyle(color: AppColors.pureWhite),
+                style: CustomTextStyles.text,
               ),
             ),
           ),
@@ -58,7 +54,7 @@ class DuePaymentRow extends StatelessWidget {
             child: Center(
               child: Text(
                 entry.notes,
-                style: const TextStyle(color: AppColors.pureWhite),
+                style: CustomTextStyles.text,
               ),
             ),
           ),
@@ -76,7 +72,7 @@ class DuePaymentRow extends StatelessWidget {
                 },
                 child: const Text(
                   "Edit",
-                  style: TextStyle(color: AppColors.pureWhite),
+                  style: CustomTextStyles.text,
                 ),
               ),
             ),
@@ -92,7 +88,7 @@ class DuePaymentRow extends StatelessWidget {
                 },
                 child: const Text(
                   "Delete",
-                  style: TextStyle(color: AppColors.pureWhite),
+                  style: CustomTextStyles.text,
                 ),
               ),
             ),

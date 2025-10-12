@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mera_web/core/theme/textstyle.dart';
 import 'package:mera_web/core/theme/web_color.dart';
 import 'package:mera_web/features/due%20payment/presentation/widget/due_payment_screen/due_payment_add.dart';
 
@@ -31,14 +32,8 @@ class DuePaymentHeader extends StatelessWidget {
           onPressed: () {
             customAddDuePaymentDialog(context: context);
           },
-          child: const Text(
-            "Add Due Payment",
-            style: TextStyle(
-              fontSize: 16,
-              color: AppColors.pureWhite,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
+          child:
+              const Text("Add Due Payment", style: CustomTextStyles.buttonText),
         ),
       ],
     );

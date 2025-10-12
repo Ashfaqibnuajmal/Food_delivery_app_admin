@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mera_web/core/theme/textstyle.dart';
 import 'package:mera_web/core/theme/web_color.dart';
 
 class ExpanceHeader extends StatelessWidget {
@@ -17,14 +18,7 @@ class ExpanceHeader extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         // Title
-        Text(
-          title,
-          style: const TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-            color: AppColors.pureWhite,
-          ),
-        ),
+        Text(title, style: CustomTextStyles.title),
 
         // Add Button
         ElevatedButton(

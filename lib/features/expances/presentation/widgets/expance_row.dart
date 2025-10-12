@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mera_web/core/theme/textstyle.dart';
 import 'package:mera_web/core/theme/web_color.dart';
 import 'package:mera_web/features/expances/models/expance_model.dart';
 
@@ -16,7 +17,6 @@ class ExpenseRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isPaid = expense.status == "Paid";
     return Container(
       color: AppColors.lightBlue.withOpacity(0.1), // row background color
       padding: const EdgeInsets.symmetric(vertical: 12),
@@ -24,26 +24,24 @@ class ExpenseRow extends StatelessWidget {
         children: [
           Expanded(
               child: Center(
-                  child: Text(expense.date.toString().split(" ")[0],
-                      style: const TextStyle(color: AppColors.pureWhite)))),
+                  child: Text(
+            expense.date.toString().split(" ")[0],
+            style: CustomTextStyles.text,
+          ))),
           Expanded(
               child: Center(
-                  child: Text(expense.category,
-                      style: const TextStyle(color: AppColors.pureWhite)))),
+                  child: Text(
+            expense.category,
+            style: CustomTextStyles.text,
+          ))),
           Expanded(
               child: Center(
                   child: Text(expense.amount.toString(),
-                      style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.pureWhite)))),
+                      style: CustomTextStyles.addCategory))),
           Expanded(
             child: Center(
-              child: Text(
-                expense.status,
-                style: TextStyle(
-                    color: isPaid ? Colors.green : Colors.red,
-                    fontWeight: FontWeight.bold),
-              ),
+              child: Text(expense.status,
+                  style: CustomTextStyles.status(expense.status)),
             ),
           ),
           Expanded(
@@ -52,8 +50,7 @@ class ExpenseRow extends StatelessWidget {
                 style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.deepBlue),
                 onPressed: onEdit,
-                child: const Text("Edit",
-                    style: TextStyle(color: AppColors.pureWhite)),
+                child: const Text("Edit", style: CustomTextStyles.text),
               ),
             ),
           ),
@@ -62,8 +59,7 @@ class ExpenseRow extends StatelessWidget {
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
                 onPressed: onDelete,
-                child: const Text("Delete",
-                    style: TextStyle(color: AppColors.pureWhite)),
+                child: const Text("Delete", style: CustomTextStyles.text),
               ),
             ),
           ),

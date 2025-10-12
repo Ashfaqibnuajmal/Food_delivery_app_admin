@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:mera_web/core/theme/textstyle.dart';
 import 'package:mera_web/core/theme/web_color.dart';
 import 'package:mera_web/features/due%20payment/model/due_user_model.dart';
 import 'package:mera_web/features/due%20payment/services/due_payment_services.dart';
@@ -29,13 +30,8 @@ Future<void> customAddDuePaymentDialog({
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Center(
-                  child: Text(
-                    "Add Due Payment User",
-                    style: TextStyle(
-                        color: AppColors.pureWhite,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18),
-                  ),
+                  child: Text("Add Due Payment User",
+                      style: CustomTextStyles.title),
                 ),
                 const SizedBox(height: 25),
 
@@ -44,7 +40,7 @@ Future<void> customAddDuePaymentDialog({
                   controller: nameController,
                   keyboardType: TextInputType.text,
                   decoration: inputDecoration("Name"),
-                  style: const TextStyle(color: AppColors.pureWhite),
+                  style: CustomTextStyles.text,
                 ),
                 const SizedBox(height: 20),
 
@@ -53,7 +49,7 @@ Future<void> customAddDuePaymentDialog({
                   controller: phoneController,
                   keyboardType: TextInputType.phone,
                   decoration: inputDecoration("Phone number"),
-                  style: const TextStyle(color: AppColors.pureWhite),
+                  style: CustomTextStyles.text,
                 ),
                 const SizedBox(height: 20),
 
@@ -62,7 +58,7 @@ Future<void> customAddDuePaymentDialog({
                   controller: emailController,
                   keyboardType: TextInputType.emailAddress,
                   decoration: inputDecoration("Email"),
-                  style: const TextStyle(color: AppColors.pureWhite),
+                  style: CustomTextStyles.text,
                 ),
                 const SizedBox(height: 30),
 
@@ -105,14 +101,7 @@ Future<void> customAddDuePaymentDialog({
                         log("❌ Error adding new due user: $e");
                       }
                     },
-                    child: const Text(
-                      "Add User",
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.pureWhite,
-                      ),
-                    ),
+                    child: const Text("Add User", style: CustomTextStyles.buttonText),
                   ),
                 ),
               ],

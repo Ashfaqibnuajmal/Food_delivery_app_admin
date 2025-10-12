@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:mera_web/core/theme/textstyle.dart';
 import 'package:mera_web/core/theme/web_color.dart';
 import '../../../../core/widgets/input_decoration.dart';
 
@@ -68,7 +69,7 @@ Future<void> showEditExpenseDialog({
                 icon: const Icon(Icons.date_range, color: AppColors.pureWhite),
                 label: Text(
                   selectedDate.toString().split(" ")[0],
-                  style: const TextStyle(color: AppColors.pureWhite),
+                  style: CustomTextStyles.text,
                 ),
               ),
               const SizedBox(height: 20),
@@ -78,7 +79,7 @@ Future<void> showEditExpenseDialog({
                 value: category,
                 decoration: inputDecoration("Category"),
                 dropdownColor: AppColors.deepBlue,
-                style: const TextStyle(color: AppColors.pureWhite),
+                style: CustomTextStyles.text,
                 items: const [
                   DropdownMenuItem(
                       value: "Electricity", child: Text("Electricity")),
@@ -99,7 +100,7 @@ Future<void> showEditExpenseDialog({
                 controller: amountController,
                 keyboardType: TextInputType.number,
                 decoration: inputDecoration("Edit Amount"),
-                style: const TextStyle(color: AppColors.pureWhite),
+                style: CustomTextStyles.text,
               ),
               const SizedBox(height: 20),
 
@@ -108,7 +109,7 @@ Future<void> showEditExpenseDialog({
                 value: status,
                 decoration: inputDecoration("Status"),
                 dropdownColor: AppColors.deepBlue,
-                style: const TextStyle(color: AppColors.pureWhite),
+                style: CustomTextStyles.text,
                 items: const [
                   DropdownMenuItem(value: "Paid", child: Text("Paid")),
                   DropdownMenuItem(value: "Consumed", child: Text("Consumed")),
@@ -134,13 +135,8 @@ Future<void> showEditExpenseDialog({
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8)),
                 ),
-                child: const Text(
-                  "Save Changes",
-                  style: TextStyle(
-                      fontSize: 16,
-                      color: AppColors.pureWhite,
-                      fontWeight: FontWeight.bold),
-                ),
+                child: const Text("Save Changes",
+                    style: CustomTextStyles.buttonText),
               ),
             ],
           ),

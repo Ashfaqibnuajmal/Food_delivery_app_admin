@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mera_web/core/theme/textstyle.dart';
 import 'package:mera_web/core/theme/web_color.dart';
 import 'package:mera_web/features/due%20payment/model/due_user_model.dart';
 import 'package:mera_web/features/due%20payment/presentation/screens/due_payment_view_screen.dart';
@@ -31,26 +32,27 @@ class DuePaymentTable extends StatelessWidget {
               children: [
                 Expanded(
                     child: Center(
-                        child: Text(user.name,
-                            style:
-                                const TextStyle(color: AppColors.pureWhite)))),
+                        child: Text(
+                  user.name,
+                  style: CustomTextStyles.text,
+                ))),
                 Expanded(
                     child: Center(
-                        child: Text(user.phone,
-                            style:
-                                const TextStyle(color: AppColors.pureWhite)))),
+                        child: Text(
+                  user.phone,
+                  style: CustomTextStyles.text,
+                ))),
                 Expanded(
                     child: Center(
-                        child: Text(user.email,
-                            style:
-                                const TextStyle(color: AppColors.pureWhite)))),
+                        child: Text(
+                  user.email,
+                  style: CustomTextStyles.text,
+                ))),
                 Expanded(
                   child: Center(
                     child: Text(
                       "₹${user.balance.toStringAsFixed(2)}",
-                      style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.pureWhite),
+                      style: CustomTextStyles.text,
                     ),
                   ),
                 ),
@@ -68,11 +70,8 @@ class DuePaymentTable extends StatelessWidget {
                           ),
                         );
                       },
-                      child: const Text(
-                        "View",
-                        style: TextStyle(
-                            color: Colors.green, fontWeight: FontWeight.bold),
-                      ),
+                      child:
+                          const Text("View", style: CustomTextStyles.viewStyle),
                     ),
                   ),
                 ),
@@ -90,8 +89,7 @@ class DuePaymentTable extends StatelessWidget {
                         customEditDuePaymentDialog(
                             context: context, currentUser: user);
                       },
-                      child: const Text("Edit",
-                          style: TextStyle(color: AppColors.pureWhite)),
+                      child: const Text("Edit", style: CustomTextStyles.text),
                     ),
                   ),
                 ),
@@ -108,8 +106,7 @@ class DuePaymentTable extends StatelessWidget {
                       onPressed: () async {
                         await dueService.deleteDueUser(user.userId);
                       },
-                      child: const Text("Delete",
-                          style: TextStyle(color: AppColors.pureWhite)),
+                      child: const Text("Delete", style: CustomTextStyles.text),
                     ),
                   ),
                 ),

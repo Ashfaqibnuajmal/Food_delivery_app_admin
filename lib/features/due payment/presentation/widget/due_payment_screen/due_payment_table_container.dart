@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mera_web/core/theme/textstyle.dart';
 import 'package:mera_web/features/due%20payment/model/due_user_model.dart';
 import 'package:mera_web/features/due%20payment/presentation/widget/due_payment_screen/due_payment_table.dart';
 import 'package:mera_web/features/due%20payment/presentation/widget/due_payment_screen/due_payment_table_header.dart';
@@ -26,10 +27,7 @@ class DuePaymentTableContainer extends StatelessWidget {
 
           if (!snapshot.hasData || snapshot.data!.isEmpty) {
             return const Center(
-              child: Text(
-                "No due users found",
-                style: TextStyle(color: AppColors.pureWhite),
-              ),
+              child: Text("No due users found", style: CustomTextStyles.header),
             );
           }
 

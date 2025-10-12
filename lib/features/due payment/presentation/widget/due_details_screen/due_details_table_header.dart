@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mera_web/core/theme/textstyle.dart';
 import 'package:mera_web/core/theme/web_color.dart';
 
 class DuePaymentTableHeader extends StatelessWidget {
@@ -18,11 +19,7 @@ class DuePaymentTableHeader extends StatelessWidget {
             child: Center(
               child: Text(
                 "Date",
-                style: TextStyle(
-                  color: AppColors.pureWhite,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 15,
-                ),
+                style: CustomTextStyles.header,
               ),
             ),
           ),
@@ -30,11 +27,7 @@ class DuePaymentTableHeader extends StatelessWidget {
             child: Center(
               child: Text(
                 "Status",
-                style: TextStyle(
-                  color: AppColors.pureWhite,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 15,
-                ),
+                style: CustomTextStyles.header,
               ),
             ),
           ),
@@ -42,11 +35,7 @@ class DuePaymentTableHeader extends StatelessWidget {
             child: Center(
               child: Text(
                 "Amount",
-                style: TextStyle(
-                  color: AppColors.pureWhite,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 15,
-                ),
+                style: CustomTextStyles.header,
               ),
             ),
           ),
@@ -54,11 +43,7 @@ class DuePaymentTableHeader extends StatelessWidget {
             child: Center(
               child: Text(
                 "Notes",
-                style: TextStyle(
-                  color: AppColors.pureWhite,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 15,
-                ),
+                style: CustomTextStyles.header,
               ),
             ),
           ),
@@ -66,11 +51,7 @@ class DuePaymentTableHeader extends StatelessWidget {
             child: Center(
               child: Text(
                 "Edit",
-                style: TextStyle(
-                  color: AppColors.pureWhite,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 15,
-                ),
+                style: CustomTextStyles.header,
               ),
             ),
           ),
@@ -78,11 +59,7 @@ class DuePaymentTableHeader extends StatelessWidget {
             child: Center(
               child: Text(
                 "Delete",
-                style: TextStyle(
-                  color: AppColors.pureWhite,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 15,
-                ),
+                style: CustomTextStyles.header,
               ),
             ),
           ),

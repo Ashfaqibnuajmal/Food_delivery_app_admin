@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mera_web/core/theme/web_color.dart';
 
 class CustomTextStyles {
   static const TextStyle title = TextStyle(
@@ -15,6 +16,11 @@ class CustomTextStyles {
     color: Colors.white,
     fontWeight: FontWeight.bold,
     fontSize: 26,
+  );
+  static const TextStyle nameStyle = TextStyle(
+    color: Colors.white,
+    fontWeight: FontWeight.bold,
+    fontSize: 20,
   );
 
   static const TextStyle snackBar = TextStyle(
@@ -46,9 +52,16 @@ class CustomTextStyles {
     fontSize: 16,
     color: Colors.white,
   );
+  static const TextStyle text = TextStyle(
+    color: AppColors.pureWhite,
+  );
   static const TextStyle yesORno = TextStyle(
     fontSize: 14,
     color: Colors.black,
+    fontWeight: FontWeight.bold,
+  );
+  static const TextStyle viewStyle = TextStyle(
+    color: Colors.green,
     fontWeight: FontWeight.bold,
   );
   static const TextStyle header = TextStyle(
@@ -56,4 +69,27 @@ class CustomTextStyles {
     fontWeight: FontWeight.bold,
     fontSize: 16,
   );
+  static TextStyle balance(double balance) {
+    return TextStyle(
+      color: balance > 0 ? Colors.red : Colors.green,
+      fontWeight: FontWeight.bold,
+      fontSize: 16,
+    );
+  }
+
+  static TextStyle status(String status) {
+    return TextStyle(
+      color: status == "Paid" ? Colors.green : Colors.red,
+      fontWeight: FontWeight.bold,
+      fontSize: 14, // optional, set your default size
+    );
+  }
+
+  static TextStyle userStatus(bool isActive) {
+    return TextStyle(
+      color: isActive ? Colors.green : Colors.red,
+      fontWeight: FontWeight.bold,
+      fontSize: 14, // optional
+    );
+  }
 }

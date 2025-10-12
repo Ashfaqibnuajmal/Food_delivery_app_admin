@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mera_web/core/theme/textstyle.dart';
 import 'package:mera_web/core/theme/web_color.dart';
 import 'package:mera_web/features/due%20payment/presentation/widget/due_details_screen/entry_add.dart';
 
@@ -28,13 +29,8 @@ class DueDetailsHeader extends StatelessWidget {
               ),
             ),
             Text(
-              "${userName[0].toUpperCase()}${userName.substring(1)}'s Due Details",
-              style: const TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: AppColors.pureWhite,
-              ),
-            ),
+                "${userName[0].toUpperCase()}${userName.substring(1)}'s Due Details",
+                style: CustomTextStyles.nameStyle),
           ],
         ),
         ElevatedButton(
@@ -45,14 +41,7 @@ class DueDetailsHeader extends StatelessWidget {
           onPressed: () {
             customAddEntryDialog(context: context, userId: userId);
           },
-          child: const Text(
-            "Add Entry",
-            style: TextStyle(
-              fontSize: 16,
-              color: AppColors.pureWhite,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
+          child: const Text("Add Entry", style: CustomTextStyles.buttonText),
         ),
       ],
     );

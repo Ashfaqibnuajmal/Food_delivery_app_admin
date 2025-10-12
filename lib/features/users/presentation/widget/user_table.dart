@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mera_web/core/provider/user_search_provider.dart';
+import 'package:mera_web/core/theme/textstyle.dart';
 import 'package:mera_web/features/due%20payment/presentation/widget/due_payment_screen/due_payment_table_header.dart';
 import 'package:mera_web/features/users/model/user_model.dart';
 import 'package:mera_web/features/users/presentation/widget/user_cell_text.dart';
@@ -25,10 +26,7 @@ class UserTable extends StatelessWidget {
           }
           if (!snapshot.hasData || snapshot.data!.isEmpty) {
             return const Center(
-              child: Text(
-                'No users found',
-                style: TextStyle(color: AppColors.pureWhite),
-              ),
+              child: Text('No users found', style: CustomTextStyles.text),
             );
           }
 
@@ -91,9 +89,7 @@ class _UserTableBody extends StatelessWidget {
                 final isActive = user.status.toLowerCase() == 'active';
                 return Container(
                   padding: const EdgeInsets.symmetric(vertical: 12),
-                  decoration: const BoxDecoration(
-                    border: Border(bottom: BorderSide(color: Colors.black26)),
-                  ),
+                  decoration: const BoxDecoration(),
                   child: Row(
                     children: [
                       DataCellText(user.name),
@@ -101,14 +97,10 @@ class _UserTableBody extends StatelessWidget {
                       DataCellText(user.email),
                       Expanded(
                         child: Center(
-                          child: Text(
-                            isActive ? 'Active' : 'Blocked',
-                            style: TextStyle(
-                              color: isActive ? Colors.green : Colors.red,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
+                            child: Text(
+                          isActive ? 'Active' : 'Blocked',
+                          style: CustomTextStyles.userStatus(isActive),
+                        )),
                       ),
                       Expanded(
                         child: Center(

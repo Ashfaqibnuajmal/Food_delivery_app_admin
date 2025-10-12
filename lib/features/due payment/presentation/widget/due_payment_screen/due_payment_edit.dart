@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:mera_web/core/theme/textstyle.dart';
 import 'package:mera_web/core/theme/web_color.dart';
 import 'package:mera_web/features/due%20payment/model/due_user_model.dart';
 import 'package:mera_web/features/due%20payment/services/due_payment_services.dart';
@@ -29,14 +30,8 @@ Future<void> customEditDuePaymentDialog({
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Center(
-                  child: Text(
-                    "Edit Due Payment User",
-                    style: TextStyle(
-                      color: AppColors.pureWhite,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                    ),
-                  ),
+                  child: Text("Edit Due Payment User",
+                      style: CustomTextStyles.title),
                 ),
                 const SizedBox(height: 25),
 
@@ -45,7 +40,7 @@ Future<void> customEditDuePaymentDialog({
                   controller: nameController,
                   keyboardType: TextInputType.text,
                   decoration: inputDecoration("Name"),
-                  style: const TextStyle(color: AppColors.pureWhite),
+                  style: CustomTextStyles.text,
                 ),
                 const SizedBox(height: 20),
 
@@ -54,7 +49,7 @@ Future<void> customEditDuePaymentDialog({
                   controller: phoneController,
                   keyboardType: TextInputType.phone,
                   decoration: inputDecoration("Phone number"),
-                  style: const TextStyle(color: AppColors.pureWhite),
+                  style: CustomTextStyles.text,
                 ),
                 const SizedBox(height: 20),
 
@@ -63,7 +58,7 @@ Future<void> customEditDuePaymentDialog({
                   controller: emailController,
                   keyboardType: TextInputType.emailAddress,
                   decoration: inputDecoration("Email"),
-                  style: const TextStyle(color: AppColors.pureWhite),
+                  style: CustomTextStyles.text,
                 ),
                 const SizedBox(height: 30),
 
@@ -108,14 +103,8 @@ Future<void> customEditDuePaymentDialog({
                         log("❌ Error editing user: $e");
                       }
                     },
-                    child: const Text(
-                      "Update",
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.pureWhite,
-                      ),
-                    ),
+                    child: const Text("Update",
+                        style: CustomTextStyles.buttonText),
                   ),
                 ),
               ],

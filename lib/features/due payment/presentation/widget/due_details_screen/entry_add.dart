@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:mera_web/core/theme/textstyle.dart';
 import 'package:mera_web/core/theme/web_color.dart';
 import 'package:mera_web/features/due%20payment/model/payment_entry_model.dart';
 import 'package:mera_web/features/due%20payment/presentation/widget/due_payment_screen/due_payment_add.dart';
@@ -30,14 +31,7 @@ Future<void> customAddEntryDialog({
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Text(
-                  "Add Entry",
-                  style: TextStyle(
-                    color: AppColors.pureWhite,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18,
-                  ),
-                ),
+                const Text("Add Entry", style: CustomTextStyles.title),
                 const SizedBox(height: 20),
 
                 // 🔹 Date Picker
@@ -76,11 +70,10 @@ Future<void> customAddEntryDialog({
                   icon:
                       const Icon(Icons.date_range, color: AppColors.pureWhite),
                   label: Text(
-                    selectedDate != null
-                        ? selectedDate!.toString().split(" ")[0]
-                        : "Pick Date",
-                    style: const TextStyle(color: AppColors.pureWhite),
-                  ),
+                      selectedDate != null
+                          ? selectedDate!.toString().split(" ")[0]
+                          : "Pick Date",
+                      style: CustomTextStyles.text),
                 ),
                 const SizedBox(height: 20),
 
@@ -88,7 +81,7 @@ Future<void> customAddEntryDialog({
                 DropdownButtonFormField<String>(
                   decoration: inputDecoration("Status"),
                   dropdownColor: AppColors.deepBlue,
-                  style: const TextStyle(color: AppColors.pureWhite),
+                  style: CustomTextStyles.text,
                   items: const [
                     DropdownMenuItem(
                       value: "Paid",
@@ -163,14 +156,8 @@ Future<void> customAddEntryDialog({
                       log("❌ Error adding entry: $e");
                     }
                   },
-                  child: const Text(
-                    "Add Entry",
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: AppColors.pureWhite,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+                  child: const Text("Add Entry",
+                      style: CustomTextStyles.buttonText),
                 ),
               ],
             ),

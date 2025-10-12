@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mera_web/core/theme/web_color.dart';
+import 'package:mera_web/core/theme/textstyle.dart';
 
 class DataCellText extends StatelessWidget {
   final String data;
@@ -10,7 +10,7 @@ class DataCellText extends StatelessWidget {
         child: Center(
           child: Text(
             data,
-            style: const TextStyle(color: AppColors.pureWhite),
+            style: CustomTextStyles.text,
             overflow: TextOverflow.ellipsis,
           ),
         ),

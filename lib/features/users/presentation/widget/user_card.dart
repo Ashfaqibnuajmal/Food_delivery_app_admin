@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mera_web/core/theme/textstyle.dart';
 import 'package:mera_web/core/theme/web_color.dart';
 
 class UserCard extends StatelessWidget {
@@ -31,13 +32,7 @@ class UserCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            Text(
-              title,
-              style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.pureWhite),
-            ),
+            Text(title, style: CustomTextStyles.addCategory),
             Container(
               height: 30,
               width: 30,
@@ -47,14 +42,7 @@ class UserCard extends StatelessWidget {
             )
           ]),
           const Spacer(),
-          Text(
-            count,
-            style: const TextStyle(
-              color: AppColors.pureWhite,
-              fontWeight: FontWeight.bold,
-              fontSize: 20,
-            ),
-          )
+          Text(count, style: CustomTextStyles.nameStyle)
         ],
       ),
     );

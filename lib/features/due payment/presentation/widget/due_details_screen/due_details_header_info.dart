@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mera_web/core/theme/textstyle.dart';
 import 'package:mera_web/core/theme/web_color.dart';
 
 class UserBalanceHeader extends StatelessWidget {
@@ -19,14 +20,8 @@ class UserBalanceHeader extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              "${userName[0].toUpperCase()}${userName.substring(1)}",
-              style: const TextStyle(
-                fontSize: 20,
-                color: AppColors.pureWhite,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
+            Text("${userName[0].toUpperCase()}${userName.substring(1)}",
+                style: CustomTextStyles.nameStyle),
             Container(
               height: 35,
               width: 35,
@@ -39,14 +34,8 @@ class UserBalanceHeader extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 5),
-        Text(
-          "Total Balance Due: ₹${balance.toStringAsFixed(2)}",
-          style: TextStyle(
-            color: balance > 0 ? Colors.red : Colors.green,
-            fontWeight: FontWeight.bold,
-            fontSize: 16,
-          ),
-        ),
+        Text("Total Balance Due: ₹${balance.toStringAsFixed(2)}",
+            style: CustomTextStyles.balance(balance)),
       ],
     );
   }

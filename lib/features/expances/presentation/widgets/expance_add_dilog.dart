@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:mera_web/core/theme/textstyle.dart';
 import 'package:mera_web/core/theme/web_color.dart';
 import 'package:mera_web/features/expances/provider/expance_provider.dart';
 import 'package:provider/provider.dart';
@@ -56,11 +57,10 @@ Future<void> customAddExpenseDialog({
                 },
                 icon: const Icon(Icons.date_range, color: AppColors.pureWhite),
                 label: Text(
-                  provider.date != null
-                      ? provider.date.toString().split(" ")[0]
-                      : "Pick Date",
-                  style: const TextStyle(color: AppColors.pureWhite),
-                ),
+                    provider.date != null
+                        ? provider.date.toString().split(" ")[0]
+                        : "Pick Date",
+                    style: CustomTextStyles.text),
               ),
               const SizedBox(height: 20),
 
@@ -69,7 +69,7 @@ Future<void> customAddExpenseDialog({
                 decoration: inputDecoration("Category"),
                 value: provider.category,
                 dropdownColor: AppColors.deepBlue,
-                style: const TextStyle(color: AppColors.pureWhite),
+                style: CustomTextStyles.text,
                 items: const [
                   DropdownMenuItem(
                       value: "Electricity", child: Text("Electricity")),
@@ -89,7 +89,7 @@ Future<void> customAddExpenseDialog({
               TextFormField(
                 keyboardType: TextInputType.number,
                 decoration: inputDecoration("Enter Amount"),
-                style: const TextStyle(color: AppColors.pureWhite),
+                style: CustomTextStyles.text,
                 onChanged: (val) {
                   if (val.isNotEmpty) {
                     provider.setAmount(int.tryParse(val) ?? 0);
@@ -103,7 +103,7 @@ Future<void> customAddExpenseDialog({
                 decoration: inputDecoration("Status"),
                 value: provider.status,
                 dropdownColor: AppColors.deepBlue,
-                style: const TextStyle(color: AppColors.pureWhite),
+                style: CustomTextStyles.text,
                 items: const [
                   DropdownMenuItem(value: "Paid", child: Text("Paid")),
                   DropdownMenuItem(value: "Consumed", child: Text("Consumed")),
@@ -128,10 +128,8 @@ Future<void> customAddExpenseDialog({
                     borderRadius: BorderRadius.circular(8),
                   ),
                 ),
-                child: const Text(
-                  "Add Expense",
-                  style: TextStyle(fontSize: 16, color: AppColors.pureWhite),
-                ),
+                child: const Text("Add Expense",
+                    style: CustomTextStyles.buttonText),
               ),
             ],
           ),

@@ -1,6 +1,8 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:mera_web/core/theme/textstyle.dart';
 import 'package:mera_web/core/theme/web_color.dart';
+import 'package:mera_web/core/widgets/input_decoration.dart';
 import 'package:mera_web/features/due%20payment/model/payment_entry_model.dart';
 import 'package:mera_web/features/due%20payment/services/due_payment_services.dart';
 
@@ -32,14 +34,7 @@ Future<void> customEditEntryDialog({
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Text(
-                  "Edit Entry",
-                  style: TextStyle(
-                    color: AppColors.pureWhite,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18,
-                  ),
-                ),
+                const Text("Edit Entry", style: CustomTextStyles.title),
                 const SizedBox(height: 20),
 
                 // 🔹 Date picker
@@ -77,10 +72,8 @@ Future<void> customEditEntryDialog({
                   },
                   icon:
                       const Icon(Icons.date_range, color: AppColors.pureWhite),
-                  label: Text(
-                    selectedDate.toString().split(" ")[0],
-                    style: const TextStyle(color: AppColors.pureWhite),
-                  ),
+                  label: Text(selectedDate.toString().split(" ")[0],
+                      style: CustomTextStyles.text),
                 ),
                 const SizedBox(height: 20),
 
@@ -154,14 +147,8 @@ Future<void> customEditEntryDialog({
                       );
                     }
                   },
-                  child: const Text(
-                    "Update Entry",
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: AppColors.pureWhite,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+                  child: const Text("Update Entry",
+                      style: CustomTextStyles.buttonText),
                 ),
               ],
             ),
@@ -169,24 +156,5 @@ Future<void> customEditEntryDialog({
         ),
       );
     },
-  );
-}
-
-// ── same input decoration helper ───────────────────────────
-InputDecoration inputDecoration(String label) {
-  return InputDecoration(
-    hintText: label,
-    hintStyle: const TextStyle(color: Colors.white70),
-    filled: true,
-    fillColor: AppColors.darkBlue,
-    border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
-    enabledBorder: OutlineInputBorder(
-      borderSide: const BorderSide(color: Colors.transparent),
-      borderRadius: BorderRadius.circular(8),
-    ),
-    focusedBorder: OutlineInputBorder(
-      borderSide: const BorderSide(color: AppColors.lightBlue, width: 2),
-      borderRadius: BorderRadius.circular(8),
-    ),
   );
 }
