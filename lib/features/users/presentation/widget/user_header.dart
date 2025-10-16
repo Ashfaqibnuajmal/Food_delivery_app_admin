@@ -8,7 +8,10 @@ class HeaderCell extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Expanded(
         child: Center(
-          child: Text(title, style: CustomTextStyles.addCategory),
+          child: Text(
+            title,
+            style: CustomTextStyles.loginHeading,
+          ),
         ),
       );
 }

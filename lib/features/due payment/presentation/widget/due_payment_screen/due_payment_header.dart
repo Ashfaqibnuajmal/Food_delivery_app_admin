@@ -15,11 +15,7 @@ class DuePaymentHeader extends StatelessWidget {
       children: [
         Text(
           title,
-          style: const TextStyle(
-            fontSize: 22,
-            fontWeight: FontWeight.bold,
-            color: AppColors.pureWhite,
-          ),
+          style: CustomTextStyles.loginHeading,
         ),
         ElevatedButton(
           style: ElevatedButton.styleFrom(

@@ -4,7 +4,6 @@ class FoodItemModel {
   final String foodItemId;
   final String name;
   final String imageUrl;
-
   final int prepTimeMinutes; // preparation time in minutes
   final double calories; // calorie count
   final String description; // description text

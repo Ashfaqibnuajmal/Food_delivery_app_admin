@@ -20,7 +20,7 @@ class Header extends StatelessWidget {
         children: [
           const Text(
             "Categories",
-            style: CustomTextStyles.categoriesTitle,
+            style: CustomTextStyles.loginHeading,
           ),
           ElevatedButton(
               style: ElevatedButton.styleFrom(

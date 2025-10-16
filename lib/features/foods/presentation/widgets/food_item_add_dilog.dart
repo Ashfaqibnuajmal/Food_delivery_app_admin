@@ -93,12 +93,8 @@ Future<void> customAddFoodItemDialog({
                                     },
                                   )
                                 : const Center(
-                                    child: Text(
-                                      "Click here to add image!",
-                                      style: TextStyle(
-                                          color: Colors.white70,
-                                          fontWeight: FontWeight.bold),
-                                    ),
+                                    child: Text("Click here to add image!",
+                                        style: CustomTextStyles.buttonText),
                                   ),
                       ),
                     ),

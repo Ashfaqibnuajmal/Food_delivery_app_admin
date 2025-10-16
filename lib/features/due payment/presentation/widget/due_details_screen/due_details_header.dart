@@ -29,8 +29,9 @@ class DueDetailsHeader extends StatelessWidget {
               ),
             ),
             Text(
-                "${userName[0].toUpperCase()}${userName.substring(1)}'s Due Details",
-                style: CustomTextStyles.nameStyle),
+              "${userName[0].toUpperCase()}${userName.substring(1)}'s Due Details",
+              style: CustomTextStyles.loginHeading,
+            ),
           ],
         ),
         ElevatedButton(

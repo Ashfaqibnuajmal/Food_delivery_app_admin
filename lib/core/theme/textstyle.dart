@@ -92,4 +92,17 @@ class CustomTextStyles {
       fontSize: 14, // optional
     );
   }
+
+  static TextStyle bestSeller(bool isBestSeller) {
+    return TextStyle(
+      color: isBestSeller ? Colors.amberAccent : Colors.white60,
+      fontWeight: FontWeight.bold,
+    );
+  }
+
+  static const TextStyle tableHeader = TextStyle(
+    color: Colors.white70,
+    fontWeight: FontWeight.w700,
+    letterSpacing: 0.5,
+  );
 }

@@ -21,7 +21,10 @@ class UsersScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text('User Management', style: CustomTextStyles.title),
+              const Text(
+                'User Management',
+                style: CustomTextStyles.loginHeading,
+              ),
               const SizedBox(height: 25),
               const VoiceSearchBar(),
               const SizedBox(height: 30),

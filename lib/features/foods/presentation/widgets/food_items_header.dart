@@ -18,11 +18,7 @@ class FoodItemsHeader extends StatelessWidget {
       children: [
         const Text(
           "Food Management",
-          style: TextStyle(
-            fontSize: 22,
-            fontWeight: FontWeight.bold,
-            color: AppColors.pureWhite,
-          ),
+          style: CustomTextStyles.loginHeading,
         ),
         ElevatedButton(
           style: ElevatedButton.styleFrom(

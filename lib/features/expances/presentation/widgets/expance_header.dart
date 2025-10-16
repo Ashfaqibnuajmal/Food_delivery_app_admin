@@ -18,7 +18,10 @@ class ExpanceHeader extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         // Title
-        Text(title, style: CustomTextStyles.title),
+        Text(
+          title,
+          style: CustomTextStyles.loginHeading,
+        ),
 
         // Add Button
         ElevatedButton(
