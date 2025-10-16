@@ -1,11 +1,14 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:mera_web/features/auth/screens/login_screen.dart';
 import 'package:mera_web/core/provider/pick_image.dart';
 import 'package:mera_web/features/categories/services/category_sevices.dart';
 import 'package:mera_web/core/constants/firebase_options.dart';
 import 'package:mera_web/features/expances/provider/expance_provider.dart';
 import 'package:mera_web/core/provider/user_search_provider.dart';
+import 'package:mera_web/features/foods/presentation/screens/fooditem_screen.dart';
+import 'package:mera_web/features/foods/provider/dialogstateprovider.dart';
+import 'package:mera_web/features/foods/services/food_item_services.dart';
+import 'package:mera_web/features/home/home.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -34,6 +37,9 @@ class MyApp extends StatelessWidget {
           // ✅ Added Expense Provider
           create: (_) => ExpenseProvider(),
         ),
+        ChangeNotifierProvider<FoodItemServices>(
+          create: (_) => FoodItemServices(),
+        )
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -42,7 +48,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: LoginScreen(), // 👈 Launches your expense page UI
+        home: HomePage(), // 👈 Launches your expense page UI
       ),
     );
   }

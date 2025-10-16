@@ -27,14 +27,7 @@ class ExpanceHeader extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
           ),
           onPressed: onAddPressed,
-          child: const Text(
-            "Add Expanse",
-            style: TextStyle(
-              fontSize: 16,
-              color: AppColors.pureWhite,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
+          child: const Text("Add Expanse", style: CustomTextStyles.buttonText),
         ),
       ],
     );

@@ -6,7 +6,7 @@ import 'package:mera_web/features/chat/chat_screen.dart';
 import 'package:mera_web/features/dashboard/dashboard_screen.dart';
 import 'package:mera_web/features/due%20payment/presentation/screens/due_payment_screen.dart';
 import 'package:mera_web/features/expances/presentation/screens/expance_screen.dart';
-import 'package:mera_web/features/foods/fooditem_screen.dart';
+import 'package:mera_web/features/foods/presentation/screens/fooditem_screen.dart';
 import 'package:mera_web/features/orders/order_screen.dart';
 import 'package:mera_web/features/users/presentation/screens/user_screen.dart';
 
@@ -127,7 +127,7 @@ class _HomePageState extends State<HomePage> {
               children: [
                 DashboardScreen(),
                 OrderScreen(),
-                FooditemScreen(),
+                FoodItemsScreen(),
                 UsersScreen(),
                 ChatScreen(),
                 CatagoriesScreen(),
