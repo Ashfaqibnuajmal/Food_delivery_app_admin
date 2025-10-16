@@ -37,7 +37,6 @@ Future<void> customAddFoodItemDialog({
 
   return showDialog(
     context: context,
-    barrierDismissible: false,
     builder: (context) {
       return ChangeNotifierProvider(
         create: (_) => AddFoodDialogProvider(),
