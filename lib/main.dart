@@ -5,7 +5,6 @@ import 'package:mera_web/features/categories/services/category_sevices.dart';
 import 'package:mera_web/core/constants/firebase_options.dart';
 import 'package:mera_web/features/expances/provider/expance_provider.dart';
 import 'package:mera_web/core/provider/user_search_provider.dart';
-import 'package:mera_web/features/foods/presentation/screens/fooditem_screen.dart';
 import 'package:mera_web/features/foods/provider/dialogstateprovider.dart';
 import 'package:mera_web/features/foods/services/food_item_services.dart';
 import 'package:mera_web/features/home/home.dart';
@@ -39,7 +38,10 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider<FoodItemServices>(
           create: (_) => FoodItemServices(),
-        )
+        ),
+        ChangeNotifierProvider<AddFoodDialogProvider>(
+          create: (_) => AddFoodDialogProvider(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

@@ -127,7 +127,7 @@ class _HomePageState extends State<HomePage> {
               children: [
                 DashboardScreen(),
                 OrderScreen(),
-                FoodItemsScreen(),
+                FooditemScreen(),
                 UsersScreen(),
                 ChatScreen(),
                 CatagoriesScreen(),

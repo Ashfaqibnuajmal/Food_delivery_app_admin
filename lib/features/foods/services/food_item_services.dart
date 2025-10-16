@@ -9,7 +9,7 @@ import 'package:mera_web/features/foods/model/food_item_model.dart';
 class FoodItemServices extends ChangeNotifier {
   final foodItemCollection = FirebaseFirestore.instance.collection("FoodItems");
 
-  // 🔹 Cloudinary credentials (same as your category service)
+  // 🔹 Cloudinary credentials
   static const cloudName = "dsuwmcmw4";
   static const cloudPreset = "flutter_uploads";
   static const cloudApiKey = "837695524881733";
@@ -39,26 +39,25 @@ class FoodItemServices extends ChangeNotifier {
   //──────────────────────────────────────────────
   // 🔸 Add new food item (upload image + save Firestore)
   //──────────────────────────────────────────────
-  Future<void> addFoodItem(String name, Uint8List image) async {
+  Future<void> addFoodItem(FoodItemModel food, Uint8List image) async {
     try {
-      final exists = await isFoodItemExist(name);
+      final exists = await isFoodItemExist(food.name);
       if (exists) {
-        throw Exception("Food Item with the name $name already exists!");
+        throw Exception("Food Item with the name ${food.name} already exists!");
       }
 
       final imageUrl = await sendImageToCloudinary(image);
-      if (imageUrl != null) {
-        final docRef = foodItemCollection.doc();
-        final foodItem = FoodItemModel(
-          foodItemId: docRef.id,
-          name: name,
-          imageUrl: imageUrl,
-        );
-        await foodItemCollection.doc(docRef.id).set(foodItem.toMap());
-        log("✅ FoodItem added: ${foodItem.toMap()}");
-      } else {
-        throw Exception("Image upload failed!");
-      }
+      if (imageUrl == null) throw Exception("Image upload failed!");
+
+      final docRef = foodItemCollection.doc();
+      final newItem = food.copyWith(
+        foodItemId: docRef.id,
+        imageUrl: imageUrl,
+      );
+
+      await foodItemCollection.doc(docRef.id).set(newItem.toMap());
+      log("✅ Food item added: ${newItem.foodItemId}");
+      notifyListeners();
     } catch (e) {
       log("❌ Error adding food item: $e");
       rethrow;
@@ -68,28 +67,24 @@ class FoodItemServices extends ChangeNotifier {
   //──────────────────────────────────────────────
   // 🔸 Edit food item (replace image if updated)
   //──────────────────────────────────────────────
-  Future<void> editFoodItem(
-      FoodItemModel foodItem, String oldImageUrl, Uint8List? newImage) async {
+  Future<void> editFoodItem(FoodItemModel foodItem,
+      {Uint8List? newImageBytes, String? oldImageUrl}) async {
     try {
       String finalImageUrl = foodItem.imageUrl;
 
-      // if a new image picked, replace on Cloudinary
-      if (newImage != null) {
-        await _deleteImageFromCloudinary(oldImageUrl);
-        final uploaded = await sendImageToCloudinary(newImage);
+      if (newImageBytes != null) {
+        // delete and re‑upload
+        if (oldImageUrl != null && oldImageUrl.isNotEmpty) {
+          await _deleteImageFromCloudinary(oldImageUrl);
+        }
+        final uploaded = await sendImageToCloudinary(newImageBytes);
         if (uploaded != null) finalImageUrl = uploaded;
       }
 
-      final updatedItem = FoodItemModel(
-        foodItemId: foodItem.foodItemId,
-        name: foodItem.name,
-        imageUrl: finalImageUrl,
-      );
-
-      await foodItemCollection
-          .doc(foodItem.foodItemId)
-          .update(updatedItem.toMap());
+      final updated = foodItem.copyWith(imageUrl: finalImageUrl);
+      await foodItemCollection.doc(foodItem.foodItemId).update(updated.toMap());
       log("📝 Food item updated: ${foodItem.foodItemId}");
+      notifyListeners();
     } catch (e) {
       log("❌ Error updating food item: $e");
       rethrow;
@@ -103,7 +98,8 @@ class FoodItemServices extends ChangeNotifier {
     try {
       await _deleteImageFromCloudinary(foodItem.imageUrl);
       await foodItemCollection.doc(foodItem.foodItemId).delete();
-      log("🗑️ Food item deleted: ${foodItem.foodItemId}");
+      log("🗑️  Food item deleted: ${foodItem.foodItemId}");
+      notifyListeners();
     } catch (e) {
       log("❌ Error deleting food item: $e");
       rethrow;
@@ -114,11 +110,15 @@ class FoodItemServices extends ChangeNotifier {
   // 🔸 Fetch all food items in realtime
   //──────────────────────────────────────────────
   Stream<List<FoodItemModel>> fetchFoodItems() {
-    return foodItemCollection.snapshots().map(
-          (snapshot) => snapshot.docs
-              .map((doc) => FoodItemModel.fromMap(doc.data()))
-              .toList(),
-        );
+    return foodItemCollection.snapshots().map((snapshot) {
+      return snapshot.docs.map((doc) {
+        final data = doc.data();
+        return FoodItemModel.fromMap({
+          ...data,
+          "foodItemId": doc.id,
+        });
+      }).toList();
+    });
   }
 
   //──────────────────────────────────────────────
@@ -129,24 +129,24 @@ class FoodItemServices extends ChangeNotifier {
       final url =
           Uri.parse("https://api.cloudinary.com/v1_1/$cloudName/image/upload");
       final request = http.MultipartRequest("POST", url)
-        ..fields['upload_preset'] = cloudPreset
+        ..fields["upload_preset"] = cloudPreset
         ..files.add(http.MultipartFile.fromBytes(
           "file",
           image,
-          filename: "food_item_${DateTime.now().millisecondsSinceEpoch}",
+          filename: "food_item_${DateTime.now().millisecondsSinceEpoch}.jpg",
         ));
       final response = await request.send();
 
       if (response.statusCode == 200) {
         final res = await http.Response.fromStream(response);
         final secureUrl = jsonDecode(res.body)["secure_url"];
-        log("✅ Image uploaded to Cloudinary.");
+        log("✅ Image uploaded to Cloudinary");
         return secureUrl;
       } else {
         log("❌ Cloudinary upload failed: ${response.statusCode}");
       }
     } catch (e) {
-      log("Error sending image to Cloudinary: $e");
+      log("Error uploading image: $e");
     }
     return null;
   }
@@ -160,19 +160,21 @@ class FoodItemServices extends ChangeNotifier {
       final fileName = uri.pathSegments.last.split('.').first;
       final url = Uri.parse(
           "https://api.cloudinary.com/v1_1/$cloudName/resources/image/upload");
-      final headers = {
-        "Authorization":
-            "Basic ${base64Encode(utf8.encode('$cloudApiKey:$cloudApiSecretKey'))}",
-        "Content-Type": "application/json",
-      };
-      final body = jsonEncode({"public_id": "$cloudPreset/$fileName"});
+      final auth = base64Encode(utf8.encode("$cloudApiKey:$cloudApiSecretKey"));
 
-      final response = await http.delete(url, headers: headers, body: body);
+      final response = await http.delete(
+        url,
+        headers: {
+          "Authorization": "Basic $auth",
+          "Content-Type": "application/json",
+        },
+        body: jsonEncode({"public_id": "$cloudPreset/$fileName"}),
+      );
 
       if (response.statusCode == 200) {
         log("🗑️ Image deleted from Cloudinary: $fileName");
       } else {
-        log("❌ Failed to delete image: ${response.statusCode}");
+        log("❌ Cloudinary delete failed: ${response.statusCode}");
       }
     } catch (e) {
       log("Error deleting image from Cloudinary: $e");
