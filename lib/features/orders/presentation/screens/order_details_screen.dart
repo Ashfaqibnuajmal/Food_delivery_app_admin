@@ -63,6 +63,7 @@ class OrderDetailsScreen extends StatelessWidget {
                   // ✅ Safe value handling
                   final subtotal = (data['subTotal'] ?? 0).toString();
                   final total = (data['totalAmount'] ?? 0).toString();
+                  final discount = (data['discount'] ?? 0).toString();
                   final name = data['userName']?.toString() ?? "Unknown";
 
                   return Row(
@@ -194,7 +195,7 @@ class OrderDetailsScreen extends StatelessWidget {
                               children: [
                                 const Text(
                                   "subtotal",
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                     fontSize: 16,
                                     color: AppColors.pureWhite,
                                     fontWeight: FontWeight.w400,
@@ -211,24 +212,26 @@ class OrderDetailsScreen extends StatelessWidget {
                               ],
                             ),
                             const SizedBox(height: 10),
-                            const Row(
+                            Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(
+                                const Text(
                                   "Discount",
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: AppColors.pureWhite,
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                ),
-                                Text(
-                                  " ₹.00",
                                   style: TextStyle(
                                     fontSize: 16,
                                     color: AppColors.pureWhite,
                                     fontWeight: FontWeight.w500,
                                   ),
+                                ),
+                                Text(
+                                  '₹$discount.00',
+                                  style: const TextStyle(
+                                      fontSize: 16,
+                                      color: AppColors.pureWhite,
+                                      fontWeight: FontWeight.w500,
+                                      decoration: TextDecoration.lineThrough,
+                                      decorationColor: AppColors.errorRed,
+                                      decorationThickness: 3),
                                 ),
                               ],
                             ),
