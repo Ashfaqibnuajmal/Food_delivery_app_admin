@@ -65,6 +65,7 @@ class OrderDetailsScreen extends StatelessWidget {
                   final total = (data['totalAmount'] ?? 0).toString();
                   final discount = (data['discount'] ?? 0).toString();
                   final name = data['userName']?.toString() ?? "Unknown";
+                  final status = data['orderStatus']?.toString() ?? "Making";
 
                   return Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -137,9 +138,9 @@ class OrderDetailsScreen extends StatelessWidget {
                                     color: AppColors.lightBlue,
                                     borderRadius: BorderRadius.circular(10),
                                   ),
-                                  child: const Text(
-                                    "Making",
-                                    style: TextStyle(
+                                  child: Text(
+                                    status,
+                                    style: const TextStyle(
                                       fontWeight: FontWeight.w500,
                                       fontSize: 12,
                                       color: AppColors.pureWhite,
