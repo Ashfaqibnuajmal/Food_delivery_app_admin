@@ -18,21 +18,9 @@ class DueDetailsHeader extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Row(
-          children: [
-            IconButton(
-              onPressed: () => Navigator.pop(context),
-              icon: const Icon(
-                Icons.arrow_back,
-                size: 20,
-                color: AppColors.pureWhite,
-              ),
-            ),
-            Text(
-              "${userName[0].toUpperCase()}${userName.substring(1)}'s Due Details",
-              style: CustomTextStyles.loginHeading,
-            ),
-          ],
+        Text(
+          "${userName[0].toUpperCase()}${userName.substring(1)}'s Due Details",
+          style: CustomTextStyles.loginHeading,
         ),
         ElevatedButton(
           style: ElevatedButton.styleFrom(

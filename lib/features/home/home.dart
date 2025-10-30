@@ -7,7 +7,7 @@ import 'package:mera_web/features/dashboard/dashboard_screen.dart';
 import 'package:mera_web/features/due%20payment/presentation/screens/due_payment_screen.dart';
 import 'package:mera_web/features/expances/presentation/screens/expance_screen.dart';
 import 'package:mera_web/features/foods/presentation/screens/fooditem_screen.dart';
-import 'package:mera_web/features/orders/order_screen.dart';
+import 'package:mera_web/features/orders/presentation/screens/order_screen.dart';
 import 'package:mera_web/features/users/presentation/screens/user_screen.dart';
 
 class HomePage extends StatefulWidget {

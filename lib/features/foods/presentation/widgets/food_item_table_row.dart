@@ -34,7 +34,7 @@ class FoodItemTableRow extends StatelessWidget {
                   color: AppColors.pureWhite,
                   image: DecorationImage(
                     image: NetworkImage(food.imageUrl),
-                    fit: BoxFit.contain,
+                    fit: BoxFit.cover,
                   ),
                 ),
               ),
@@ -44,7 +44,7 @@ class FoodItemTableRow extends StatelessWidget {
             flex: 3,
             child: Center(
               child: Text(
-                "${food.name}\n${food.prepTimeMinutes} min | ${food.calories} kcal\n${food.description}",
+                "${food.name}\n${food.prepTimeMinutes} min | ${food.calories} kcal",
                 textAlign: TextAlign.center,
                 style: const TextStyle(color: AppColors.pureWhite),
               ),
@@ -61,6 +61,7 @@ class FoodItemTableRow extends StatelessWidget {
             flex: 2,
             child: Center(
               child: Text(
+                textAlign: TextAlign.center,
                 food.category,
                 style: CustomTextStyles.text,
               ),
