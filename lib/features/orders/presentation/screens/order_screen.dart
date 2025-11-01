@@ -226,19 +226,10 @@ class _OrderScreenState extends State<OrderScreen> {
                                                   value: s,
                                                   child: Row(
                                                     children: [
-                                                      Icon(
+                                                      const Icon(
                                                         Icons.circle,
-                                                        color: s == "Making"
-                                                            ? Colors
-                                                                .orangeAccent
-                                                            : s == "Packing"
-                                                                ? Colors.amber
-                                                                : s ==
-                                                                        "Out for Delivery"
-                                                                    ? Colors
-                                                                        .lightBlueAccent
-                                                                    : Colors
-                                                                        .greenAccent,
+                                                        color:
+                                                            AppColors.pureWhite,
                                                         size: 10,
                                                       ),
                                                       const SizedBox(width: 8),
